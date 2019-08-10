@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using AutoMapper;
 using Gerontocracy.Core.BusinessObjects.Account;
@@ -39,7 +40,7 @@ namespace Gerontocracy.Core.Providers
             "LIMIT  @limit ";
 
         private const string UserDetailQuery =
-            "SELECT roles.\"Name\" " +
+            "SELECT roles.\"Id\", roles.\"Name\" " +
             "FROM   \"AspNetRoles\" roles " +
             "       JOIN \"AspNetUserRoles\" userRoles " +
             "         ON roles.\"Id\" = userRoles.\"RoleId\" " +
@@ -104,7 +105,11 @@ namespace Gerontocracy.Core.Providers
 
             var roles = _context.GetData(
                 UserDetailQuery,
-                reader => reader.GetString(0),
+                reader => new Role
+                {
+                    Id = reader.GetInt64(0),
+                    Name = reader.GetString(1)
+                },
                 new NpgsqlParameter<long>("userId", id).AsList().ToArray())
                 .ToList();
 

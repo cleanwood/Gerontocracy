@@ -3,6 +3,9 @@
     <mat-icon *ngIf="!isFullscreen">arrow_back</mat-icon>
     <mat-icon *ngIf="isFullscreen">arrow_forward</mat-icon>
   </button>
+  <h3 style="margin: auto">
+    {{title}}
+  </h3>
   <button mat-stroked-button color="warn" (click)="close.emit($event)">
     <mat-icon>close</mat-icon>
   </button>

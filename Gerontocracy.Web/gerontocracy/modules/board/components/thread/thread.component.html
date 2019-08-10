@@ -2,10 +2,10 @@
   <mat-spinner></mat-spinner>
 </div>
 <div class="geronto-nav-container">
-  <app-nav-top-bar (close)="close.emit($event)" (sizeChanged)="toggleSize($event)" ></app-nav-top-bar>
+  <app-nav-top-bar (close)="close.emit($event)" title="Threadansicht" (sizeChanged)="toggleSize($event)" ></app-nav-top-bar>
   
-  <h1 mat-dialog-title>{{data.id}} {{data.titel}}</h1>
-  <h2 mat-dialog-title *ngIf="data.vorfallId"></h2>
+  <h4 align="center">{{data.titel}}</h4>
+  <!-- <h2 *ngIf="data.vorfallId"></h2> -->
 
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>

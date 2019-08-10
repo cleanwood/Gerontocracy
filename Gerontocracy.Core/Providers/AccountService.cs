@@ -60,7 +60,7 @@ namespace Gerontocracy.Core.Providers
 
             return _mapper.Map<User>(user);
         }
-        
+
         public async Task<User> GetUserAsync(string name)
         {
             var user = await _userManager.FindByNameAsync(name);
@@ -102,11 +102,11 @@ namespace Gerontocracy.Core.Providers
             };
 
             result = await this._userManager.CreateAsync(dbUser, user.Password);
-            
+
             if (result.Succeeded)
             {
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(dbUser);
-                
+
                 if (this._settings.AutoConfirmEmails)
                 {
                     await ConfirmEmailAsync(dbUser.Id, token);
@@ -164,6 +164,30 @@ namespace Gerontocracy.Core.Providers
                 throw new AccountNotFoundException();
 
             return user;
+        }
+
+        public IEnumerable<Role> GetRolesAsync()
+            => _roleManager.Roles
+                .Where(n => !n.Name.Equals("admin", StringComparison.CurrentCultureIgnoreCase))
+                .Select(n => new Role()
+                {
+                    Id = n.Id,
+                    Name = n.Name
+                }).ToList();
+
+        public async Task<IdentityResult> SetRolesAsync(long userId, List<long> roleIds)
+        {
+            var dbRoles = _roleManager.Roles.Where(n => roleIds.Contains(n.Id)).Select(n => n.Name).ToList();
+
+            var user = await GetUserRaw(userId);
+
+            var roles = await _userManager.GetRolesAsync(user);
+            var result = await _userManager.RemoveFromRolesAsync(user, roles);
+
+            if (!result.Succeeded)
+                return result;
+
+            return await _userManager.AddToRolesAsync(user, dbRoles);
         }
 
         public async Task<IList<Claim>> GetClaimsAsync(ClaimsPrincipal principal)

@@ -58,5 +58,9 @@ namespace Gerontocracy.Core.Interfaces
         Task<IdentityResult> RemoveFromRole(long userId, string role);
 
         Task<Data.Entities.Account.User> GetUserRaw(long userId);
+
+        IEnumerable<Role> GetRolesAsync();
+
+        Task<IdentityResult> SetRolesAsync(long userId, List<long> roleIds);
     }
 }

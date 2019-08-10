@@ -7,6 +7,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
 import { PermissionComponent } from './components/permission/permission.component';
+import { AdminService } from './services/admin.service';
+import { PermissionDetailComponent } from './components/permission-detail/permission-detail.component';
 import {
   MatTabsModule,
   MatTableModule,
@@ -20,10 +22,9 @@ import {
   MatAutocompleteModule,
   MatIconModule,
   MatInputModule,
-  MatCardModule
+  MatCardModule,
+  MatListModule
 } from '@angular/material';
-import { AdminService } from './services/admin.service';
-import { PermissionDetailComponent } from './components/permission-detail/permission-detail.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { PermissionDetailComponent } from './components/permission-detail/permis
     MatAutocompleteModule,
     MatIconModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    MatListModule,
   ],
   providers: [
     AdminService

@@ -10,6 +10,7 @@ export class NavTopBarComponent implements OnInit {
   isFullscreen = false;
 
   @Input() maximized = false;
+  @Input() title: string;
 
   @Output() sizeChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() close: EventEmitter<void> = new EventEmitter<void>();

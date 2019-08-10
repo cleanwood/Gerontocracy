@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Gerontocracy.Core.BusinessObjects.Account;
 
 namespace Gerontocracy.Core.BusinessObjects.User
 {
@@ -19,6 +20,6 @@ namespace Gerontocracy.Core.BusinessObjects.User
 
         public DateTimeOffset? LockoutEnd { get; set; }
 
-        public IList<string> Roles { get; set; }
+        public IEnumerable<Role> Roles { get; set; }
     }
 }

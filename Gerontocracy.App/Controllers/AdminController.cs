@@ -1,12 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
+using Gerontocracy.App.Models.Account;
 using Gerontocracy.App.Models.Admin;
 using Gerontocracy.App.Models.Shared;
 using Gerontocracy.Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-using boUser = Gerontocracy.Core.BusinessObjects.User;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using bo = Gerontocracy.Core.BusinessObjects;
+using User = Gerontocracy.App.Models.Admin.User;
 
 namespace Gerontocracy.App.Controllers
 {
@@ -27,7 +30,10 @@ namespace Gerontocracy.App.Controllers
         /// <param name="accountService">account service</param>
         /// <param name="userService">user service</param>
         /// <param name="mapper">mapper</param>
-        public AdminController(IAccountService accountService, IUserService userService, IMapper mapper)
+        public AdminController(
+            IAccountService accountService, 
+            IUserService userService, 
+            IMapper mapper)
         {
             this._accountService = accountService;
             this._userService = userService;
@@ -53,6 +59,16 @@ namespace Gerontocracy.App.Controllers
         }
 
         /// <summary>
+        /// Returns a list of all available roles
+        /// </summary>
+        /// <returns>a list of all roles</returns>
+        [HttpGet]
+        [Authorize(Roles = "admin")]
+        [Route("roles")]
+        public IActionResult GetRoles()
+            => Ok(_mapper.Map<List<Role>>(_accountService.GetRolesAsync()));
+            
+        /// <summary>
         /// Adds a Role to a User
         /// </summary>
         /// <param name="data">data required for granting</param>
@@ -64,6 +80,24 @@ namespace Gerontocracy.App.Controllers
         {
             var result = await _accountService.AddToRole(data.UserId, data.Role);
 
+            if (result.Succeeded)
+                return Ok();
+            else
+                return BadRequest(result.Errors);
+        }
+
+        /// <summary>
+        /// Updates the user permission roles
+        /// </summary>
+        /// <param name="userRoles">contains the required data</param>
+        /// <returns>response code</returns>
+        [HttpPost]
+        [Route("set-roles")]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> SetRoles([FromBody] UserRoleUpdate userRoles)
+        {
+            var result = await _accountService.SetRolesAsync(userRoles.UserId, userRoles.RoleIds);
+            
             if (result.Succeeded)
                 return Ok();
             else
@@ -102,7 +136,7 @@ namespace Gerontocracy.App.Controllers
             string userName = "",
             int pageSize = 25,
             int pageIndex = 0)
-            => Ok(_mapper.Map<SearchResult<User>>(_userService.Search(new boUser.SearchParameters()
+            => Ok(_mapper.Map<SearchResult<User>>(_userService.Search(new bo.User.SearchParameters()
             {
                 UserName = userName
             }, pageSize, pageIndex)));

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Gerontocracy.App.Models.Account;
 
 namespace Gerontocracy.App.Models.Admin
 {
@@ -46,6 +47,6 @@ namespace Gerontocracy.App.Models.Admin
         /// <summary>
         /// The users roles
         /// </summary>
-        public IList<string> Roles { get; set; }
+        public IEnumerable<Role> Roles { get; set; }
     }
 }

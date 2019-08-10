@@ -3,13 +3,11 @@
 </div>
 
 <div class="geronto-nav-container">
-  <app-nav-top-bar (close)="close.emit($event)" (sizeChanged)="toggleSize($event)"></app-nav-top-bar>
-
-  <h1 mat-dialog-title>{{data.titel}}</h1>
+  <app-nav-top-bar (close)="close.emit($event)" [title]="Vorfallbeschreibung" (sizeChanged)="toggleSize($event)"></app-nav-top-bar>
 
   <mat-dialog-content>
     <mat-card>
-      <mat-card-subtitle>Vorfallbeschreibung</mat-card-subtitle>
+      <mat-card-subtitle>{{data.titel}}</mat-card-subtitle>
       {{data.beschreibung}}
     </mat-card>
 
