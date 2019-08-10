@@ -42,7 +42,7 @@
       </mat-expansion-panel-header>
       <mat-selection-list>
         Zugewiesene Rollen
-        <mat-list-option *ngFor="let role of adminService.roles" color="accent" (click)="toggleRole(role.id)"
+        <mat-list-option *ngFor="let role of loadedRoles" color="accent" (click)="toggleRole(role.id)"
           [selected]="roleToSelected(role.id)">
           {{role.name}}
         </mat-list-option>

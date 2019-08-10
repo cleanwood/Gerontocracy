@@ -40,6 +40,10 @@ export class PermissionDetailComponent implements OnInit {
     this.fullscreen.emit(this.isFullscreen);
   }
 
+  get loadedRoles() {
+    return this.adminService.roles;
+  }
+
   roleToSelected = (id: number): boolean => !!this.data.roles.find(n => n.id === id);
 
   rolesAggregated = (): string => this.rolesSelected.map(n => n.name).join(', ');
