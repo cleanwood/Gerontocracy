@@ -22,7 +22,8 @@ import {
   MatSidenavModule,
   MatCardModule,
   MatExpansionModule,
-  MatDialogModule
+  MatDialogModule,
+  MatListModule
 } from '@angular/material';
 
 @NgModule({
@@ -51,7 +52,8 @@ import {
     MatSidenavModule,
     MatCardModule,
     MatExpansionModule,
-    MatDialogModule
+    MatDialogModule,
+    MatListModule
   ],
   providers: [PartyService]
 })

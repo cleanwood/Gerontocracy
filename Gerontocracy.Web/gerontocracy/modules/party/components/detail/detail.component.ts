@@ -35,4 +35,18 @@ export class DetailComponent implements OnInit {
     this.isLoading = true;
     this.router.navigate([`affair/top/${id}`]);
   }
+
+  get name(): string {
+    let result = `${this.data.akadGradPre} `;
+
+    result = `${result}${this.data.vorname} ${this.data.nachname}`;
+
+    if (this.data.akadGradPost) {
+      result = ` ${result}, ${this.data.akadGradPost}`;
+    }
+
+    result = `${result} - ${this.data.partei.kurzzeichen}`;
+
+    return result;
+  }
 }

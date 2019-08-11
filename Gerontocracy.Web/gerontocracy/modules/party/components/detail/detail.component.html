@@ -3,24 +3,40 @@
 </div>
 
 <div class="geronto-nav-container">
-  <app-nav-top-bar (close)="close.emit($event)" title="Detailinformationen" (sizeChanged)="toggleSize($event)"></app-nav-top-bar>
+  <app-nav-top-bar (close)="close.emit($event)" [title]="name" (sizeChanged)="toggleSize($event)"></app-nav-top-bar>
 
   <div *ngIf="data">
-      <mat-card>
-        <h1 mat-dialog-title>
-          {{data.vorname}} {{data.nachname}} - {{data.partei.kurzzeichen}}
-        </h1>
-        <ul>
-          <li>{{data.akadGradPre}}</li>
-          <li>{{data.akadGradPost}}</li>
-          <li>{{data.wahlkreis}}</li>
-          <li>{{data.bundesland}}</li>
-          <li>{{data.notActive}}</li>
-          <li>{{data.reputationUp}}</li>
-          <li>{{data.reputationDown}}</li>
-        </ul>
-      </mat-card>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Allgemeine Daten
+        </mat-panel-title>
+        <mat-panel-description>
+          <mat-icon inline="true">thumb_up</mat-icon>
+          {{data.reputationUp}}
+          <mat-icon inline="true">thumb_down</mat-icon>
+          {{data.reputationDown}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      {{data.bundesland}} - {{data.wahlkreis}}
+      <mat-list>
+        <mat-list-item *ngIf="data.isNationalrat">
+          <mat-icon matListIcon>gavel</mat-icon>
+          <h3 matLine>Nationalrat</h3>
+        </mat-list-item>
+        <mat-list-item *ngIf="data.isRegierung">
+          <mat-icon matListIcon>account_balance</mat-icon>
+          <h3 matLine>Regierung</h3>
+        </mat-list-item>
+      </mat-list>
 
+    </mat-expansion-panel>
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Eingereichte Vorfälle
+        </mat-panel-title>
+      </mat-expansion-panel-header>
       <table mat-table [dataSource]="data.vorfaelle" class="geronto_table" matSort matSortActive="created"
         matSortDisableClear matSortDirection="asc">
 
@@ -60,5 +76,6 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
+    </mat-expansion-panel>
   </div>
 </div>
