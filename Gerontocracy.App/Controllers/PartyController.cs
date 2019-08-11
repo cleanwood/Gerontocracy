@@ -191,7 +191,6 @@ namespace Gerontocracy.App.Controllers
         /// <param name="lastname">lastname</param>
         /// <param name="firstname">firstname</param>
         /// <param name="party">party</param>
-        /// <param name="includeNotActive">include not active</param>
         /// <param name="pageSize">number of results</param>
         /// <param name="pageIndex">number of page</param>
         /// <returns>List of politicians</returns>
@@ -202,7 +201,6 @@ namespace Gerontocracy.App.Controllers
             string lastname,
             string firstname,
             string party,
-            bool includeNotActive = true,
             int pageSize = 25,
             int pageIndex = 0)
             => Ok(_mapper.Map<SearchResult<PolitikerOverview>>(_partyService.Search(new bo.SearchParameters()

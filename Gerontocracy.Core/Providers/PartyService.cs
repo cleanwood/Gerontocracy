@@ -14,6 +14,7 @@ using Gerontocracy.Data.Entities.Affair;
 using Gerontocracy.Shared.Extensions;
 
 using Microsoft.EntityFrameworkCore;
+using ReputationType = Gerontocracy.Data.Entities.Affair.ReputationType;
 
 namespace Gerontocracy.Core.Providers
 {
@@ -115,6 +116,7 @@ namespace Gerontocracy.Core.Providers
                 .Politiker
                 .Include(n => n.Partei)
                 .Include(n => n.Vorfaelle)
+                .ThenInclude(n => n.Legitimitaet)
                 .AsQueryable();
 
             if (!string.IsNullOrEmpty(parameters.Vorname))
@@ -150,8 +152,10 @@ namespace Gerontocracy.Core.Providers
                 IsRegierung = n.IsRegierung,
                 ParteiId = n.ParteiId,
                 Reputation = n.Vorfaelle.Sum(o =>
-                    o.Legitimitaet.Count(p => p.VoteType == VoteType.Up) -
-                    o.Legitimitaet.Count(p => p.VoteType == VoteType.Down))
+                    (o.ReputationType == ReputationType.Positive ? 1 :
+                     o.ReputationType == ReputationType.Negative ? -1 : 0) *
+                    (o.Legitimitaet.Count(p => p.VoteType == VoteType.Up) -
+                     o.Legitimitaet.Count(p => p.VoteType == VoteType.Down)))
             })
             .Skip(pageIndex * pageSize)
             .Take(pageSize)
