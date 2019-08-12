@@ -1,0 +1,78 @@
+<div class="geronto-container">
+  <div class="geronto-loading-shade" *ngIf="isLoading">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+
+  <div *ngIf="!isLoading">
+
+    <p-menubar [model]="items" class="geronto_toolbar">
+      <div>
+        <button pButton label="Login" icon="pi pi-sign-in" (click)="login()"></button>
+        <button pButton label="Registrieren" icon="pi pi-user-plus" style="margin-left:.25em"
+          (click)="signup()"></button>
+      </div>
+    </p-menubar>
+
+    <p-menubar [model]="burger" class="geronto_burger">
+      <div>
+        <button pButton label="Login" icon="pi pi-sign-in" (click)="login($event)"></button>
+        <button pButton label="Registrieren" icon="pi pi-user-plus" style="margin-left:.25em"
+          (click)="signup($event)"></button>
+      </div>
+    </p-menubar>
+
+    <p-sidebar [(visible)]="sidebarVisible">
+      <p-menu [model]="items"></p-menu>
+    </p-sidebar>
+
+    <p-card>
+      <router-outlet></router-outlet>
+    </p-card>
+  </div>
+</div>
+
+<p-dialog header="Login" [formGroup]="loginForm" [(visible)]="loginVisible">
+  <p-messages [(value)]="registerError"></p-messages>
+  <div class="ui-inputgroup">
+    <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
+    <input type="text" style="width: 250px" pInputText placeholder="Username">
+  </div>
+  <div class="ui-inputgroup" style="margin-top: 5px">
+    <span class="ui-inputgroup-addon"><i class="pi pi-key"></i></span>
+    <input type="password" style="width: 250px" pInputText placeholder="Passwort">
+  </div>
+  <p-footer>
+    <button pButton label="Einloggen" (click)="loginUser()"></button>
+    <button pButton label="Abbrechen" (click)="cancelLogin()"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="Registrieren" [formGroup]="registerForm" [(visible)]="registerVisible">
+  <div class="ui-inputgroup">
+    <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
+    <input type="text" style="width: 250px" pInputText placeholder="Username" (focusout)="checkUserExists()"
+      formControlName="user">
+  </div>
+  <div class="ui-inputgroup" style="margin-top: 5px">
+    <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
+    <input type="text" style="width: 250px" pInputText placeholder="E-Mail" formControlName="mail">
+  </div>
+  <div class="ui-inputgroup" style="margin-top: 5px">
+    <span class="ui-inputgroup-addon"><i class="pi pi-key"></i></span>
+    <input type="password" style="width: 250px" pInputText placeholder="Passwort" formControlName="pass1">
+  </div>
+  <div class="ui-inputgroup" style="margin-top: 5px">
+    <span class="ui-inputgroup-addon"><i class="pi pi-key"></i></span>
+    <input type="password" style="width: 250px" pInputText placeholder="Passwort wiederholen" formControlName="pass2">
+  </div>
+  <p-footer>
+    <button pButton label="Registrieren" (click)="registerUser()" color="accent" [disabled]="isRegistering"></button>
+    <button pButton label="Abbrechen" [disabled]="isRegistering"></button>
+  </p-footer>
+</p-dialog>
+
+<span hidden #loginErrorContent>Fehler beim Login - Bitte die Login-Information überprüfen!</span>
+<span hidden #registrationTitle>Registrierung erfolgreich!</span>
+<span hidden #registrationContent>Bitte überprüfe deinen Posteingang um einen Bestätigungslink!</span>
+<span hidden #errorTitle>Fehler</span>
+<span hidden #errorMessage>Der Server lieferte einen unerwarteten Fehler - bitte probiere es später nocheinmal!</span>

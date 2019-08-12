@@ -1,0 +1,29 @@
+.geronto-container {
+  width: 1200px;
+  margin: auto;
+}
+
+.geronto_burger {
+  display: none;
+}
+
+@media only screen and (max-width: 952px) {
+  .geronto_sidenav_toggle {
+    display: unset;
+  }
+
+  .geronto_burger {
+    display: unset;
+  }
+
+  .geronto_toolbar {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 1215px) {
+  .geronto-container {
+    width: auto;
+    margin: auto;
+  }
+}
