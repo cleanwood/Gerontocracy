@@ -5,6 +5,7 @@ import { AccountService } from '../services/account.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Login } from '../models/login';
 import { Message } from 'primeng/components/common/message';
+import { Register } from '../models/register';
 
 @Component({
   selector: 'app-root',
@@ -19,39 +20,55 @@ export class GerontocracyComponent implements OnInit {
   @ViewChild('loginErrorContent', { static: false }) loginErrorContent: ElementRef;
 
   items: MenuItem[] = [];
+  userMenu: MenuItem[] = [];
   burger: MenuItem[] = [];
 
   isLoading: boolean;
   accountData: User;
   sidebarVisible: boolean;
 
-  loginVisible: boolean;
-  registerVisible: boolean;
-
-  isLogingIn: boolean;
-  isRegistering: boolean;
-
-  registerError: Message[];
-  loginError: Message[];
-
   loginForm: FormGroup;
+  loginError: Message[];
+  isLogingIn: boolean;
+  loginVisible: boolean;
+  rememberMe: boolean;
+
   registerForm: FormGroup;
+  registerError: Message[];
+  isRegistering: boolean;
+  registerVisible: boolean;
+  checkUsernameAvailability: boolean;
+  checkEmailAvailability: boolean;
+
+  registerConfirmVisible: boolean;
 
   constructor(
     private accountService: AccountService,
     private formBuilder: FormBuilder) {
   }
 
+  get isDialogOpen(): boolean {
+    return this.registerVisible || this.registerConfirmVisible || this.loginVisible;
+  }
+
   ngOnInit() {
+    this.loginVisible = false;
+    this.registerVisible = false;
+    this.isLogingIn = false;
+    this.isRegistering = false;
+    this.registerConfirmVisible = false;
+    this.rememberMe = false;
+
     this.burger = [{
       icon: 'pi pi-bars',
       command: (evt) => this.toggleSidenav()
     }];
 
-    this.loginVisible = false;
-    this.registerVisible = false;
-    this.isLogingIn = false;
-    this.isRegistering = false;
+    this.userMenu = [{
+      label: 'Logout',
+      command: () => this.logout(),
+      icon: 'pi pi-sign-out'
+    }];
 
     this.isLoading = true;
     this.accountService
@@ -107,7 +124,19 @@ export class GerontocracyComponent implements OnInit {
     this.registerVisible = true;
   }
 
+  checkboxChanged(value: boolean) {
+    this.rememberMe = value;
+  }
+
+  logout() {
+    this.accountService
+      .logoutUser()
+      .toPromise()
+      .then(() => location.reload());
+  }
+
   loginUser(evt: any) {
+    console.log(this.rememberMe);
     if (this.loginForm.valid) {
       this.isLogingIn = true;
       this.loginForm.disable();
@@ -116,16 +145,15 @@ export class GerontocracyComponent implements OnInit {
       const data: Login = {
         name: temp.name,
         password: temp.pass,
-        rememberMe: temp.remember
+        rememberMe: this.rememberMe
       };
 
       this.accountService.loginUser(data)
         .toPromise()
         .then(() => {
           this.isLogingIn = false;
-          this.loginForm.enable();
-          this.loginForm.reset();
-          this.loginVisible = false;
+          this.closeLoginForm();
+          location.reload();
         })
         .catch(() => {
           this.loginError.push({ severity: 'error', summary: 'Fehler', detail: this.loginErrorContent.nativeElement.innerText });
@@ -135,21 +163,92 @@ export class GerontocracyComponent implements OnInit {
     }
   }
 
-  cancelLogin(): void {
+  closeLoginForm(): void {
+    this.loginForm.enable();
+    this.loginForm.reset();
+    this.loginVisible = false;
+  }
 
+  checkUserExists() {
+    if (!!this.registerForm.controls.name.value && !this.registerForm.controls.name.errors) {
+      this.checkUsernameAvailability = true;
+
+      this.accountService.getUserExists(this.registerForm.controls.name.value)
+        .toPromise()
+        .then(n => {
+
+          if (n) {
+            this.registerForm.controls.name.setErrors({ alreadyInUse: true });
+          }
+
+          this.checkUsernameAvailability = false;
+        });
+    }
+  }
+
+  checkEmailExists() {
+    if (!!this.registerForm.controls.mail.value && !this.registerForm.controls.mail.errors) {
+      this.checkEmailAvailability = true;
+
+      this.accountService.getEmailExists(this.registerForm.controls.mail.value)
+        .toPromise()
+        .then(n => {
+
+          if (n) {
+            this.registerForm.controls.mail.setErrors({ alreadyInUse: true });
+          }
+
+          this.checkEmailAvailability = false;
+        });
+    }
+  }
+
+  registerUser() {
+    if (this.registerForm.valid) {
+      this.isRegistering = true;
+      this.registerForm.disable();
+
+      const temp = this.registerForm.value;
+      const data: Register = {
+        email: temp.mail,
+        name: temp.name,
+        password: temp.pass1
+      };
+
+      this.accountService.registerUser(data)
+        .toPromise()
+        .then(() => {
+          this.isRegistering = false;
+          this.closeRegisterForm();
+          this.registerConfirmVisible = true;
+        })
+        .catch(() => {
+          this.isRegistering = false;
+          this.registerForm.enable();
+        });
+    }
+  }
+
+  closeRegisterForm() {
+    this.registerForm.enable();
+    this.registerForm.reset();
+    this.registerVisible = false;
+  }
+
+  closeConfirmation() {
+    this.registerConfirmVisible = false;
   }
 
   private buildLoginForm() {
     this.loginForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9]*')]],
       pass: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]],
-      remember: [false],
     });
   }
 
   private buildRegisterForm() {
     this.registerForm = this.formBuilder.group({
-      user: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9]*')]],
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9]*')]],
       mail: ['', [Validators.required, Validators.email, Validators.maxLength(40)]],
       pass1: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]],
       pass2: ['', [Validators.required, this.passwordConfirming]]
@@ -167,55 +266,3 @@ export class GerontocracyComponent implements OnInit {
     return pass === confirmPass ? null : { notSame: true };
   }
 }
-
-
-/*
-
-    <p-toolbar>
-      <div class="ui-toolbar-group-left" style="margin-right: auto">
-        <a pButton icon="pi pi-bars" class="geronto_sidenav_toggle" style="margin-right: 3.5px;"
-          (click)="sidenav.toggle()">
-        </a>
-        <a pButton href="/" icon="pi pi-briefcase" label="Gerontocracy" style="margin-right: 3.5px;"
-          class="geronto_toolbar_button"></a>
-        <a pButton routerLink="/" icon="pi pi-home" label="Home" style="margin-right: 3.5px;"
-          class="geronto_toolbar_button" routerLinkActive="active"></a>
-        <a pButton routerLink="/party" label="Parteiübersicht" icon="pi pi-users" style="margin-right: 3.5px;"
-          class="geronto_toolbar_button" routerLinkActive="active">
-        </a>
-        <a pButton routerLink="/affair" label="Vorfälle" icon="pi pi-folder-open" style="margin-right: 3.5px;"
-          class="geronto_toolbar_button" routerLinkActive="active">
-        </a>
-        <a pButton routerLink="/board" icon="pi pi-comments" class="geronto_toolbar_button" style="margin-right: 3.5px;"
-          label="Boards" routerLinkActive="active"></a>
-        <a pButton routerLink="/admin" icon="pi pi-cog" label="Administration" class="geronto_toolbar_button"
-          routerLinkActive="active" *ngIf="isAdmin"></a>
-      </div>
-
-      <div class="ui-toolbar-group-right">
-        <!-- <span *ngIf="!accountData">-->
-        <button pButton label="Login" icon="pi pi-signin" (click)="login($event)" style="margin-right: 3.5px;"></button>
-        <button pButton label="Registrieren" icon="pi pi-user-plus" (click)="signup($event)"></button>
-
-        <button pButton [matMenuTriggerFor]="menu">
-          UserName
-          <mat-icon>face</mat-icon>
-        </button>
-
-        <!-- {{accountData.userName}} -->
-        <!-- <span *ngIf="accountData"> -->
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="logout($event)">
-            <mat-icon>close</mat-icon>Logout
-          </button>
-        </mat-menu>
-
-        <!--  </span> -->
-
-
-
-        </span> -->
-      </div>
-
-    </p-toolbar>
-*/

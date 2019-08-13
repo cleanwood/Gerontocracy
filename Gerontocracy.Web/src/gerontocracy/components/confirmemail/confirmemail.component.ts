@@ -1,4 +1,7 @@
+
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, } from '@angular/router';
+import { AccountService } from '../../services/account.service';
 
 @Component({
   selector: 'app-confirmemail',
@@ -7,7 +10,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfirmemailComponent implements OnInit {
 
-  constructor() { }
+  showSuccess: boolean;
+  showError: boolean;
+
+  constructor(
+    private accountService: AccountService,
+    private activatedRoute: ActivatedRoute,
+  ) {
+
+    this.showSuccess = false;
+    this.showError = false;
+
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.accountService.confirmEmail({
+        id: +params.userId,
+        token: params.token
+      })
+        .toPromise()
+        .then(() => this.showSuccess = true)
+        .catch(() => this.showError = true);
+    });
+  }
 
   ngOnInit() {
   }

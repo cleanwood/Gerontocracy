@@ -16,19 +16,18 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
-
-
+import { BlockUIModule } from 'primeng/blockui';
+import { CheckboxModule } from 'primeng/checkbox';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { RegisterComponent } from './components/register/register.component';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { PanelModule } from 'primeng/panel';
+
 import { ConfirmemailComponent } from './components/confirmemail/confirmemail.component';
-import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
     GerontocracyComponent,
-    RegisterComponent,
     ConfirmemailComponent,
-    LoginComponent
   ],
   imports: [
     GerontocracyRoutingModule,
@@ -50,7 +49,11 @@ import { LoginComponent } from './components/login/login.component';
     DialogModule,
     InputTextModule,
     MessagesModule,
-    MessageModule
+    MessageModule,
+    BlockUIModule,
+    CheckboxModule,
+    SplitButtonModule,
+    PanelModule
   ],
   providers: [],
   bootstrap: [GerontocracyComponent]
