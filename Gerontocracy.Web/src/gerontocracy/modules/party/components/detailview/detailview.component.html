@@ -1,15 +1,11 @@
-<div align="end" *ngIf="!isPopup">
-    <p-button icon="pi pi-window-maximize" (click)="popout.emit()"></p-button>
-</div>
 <div class="ui-fluid">
-    <p-card>
+    <p-panel header="Allgemeine Infos">
         <div class="ui-g">
             <div class="ui-g-12 ui-lg-8 ui-md-12">
-                {{data|fullname}}
+                <h3>{{data|fullname}}</h3>
             </div>
-            <div class="ui-g-12 ui-lg-4 ui-md-12">
-                <i class="pi pi-user-plus"></i> {{data.reputationUp}}
-                <i class="pi pi-user-minus"></i> {{data.reputationDown}}
+            <div class="ui-g-12 ui-lg-4 ui-md-12" *ngIf="!isPopup" align="end">
+                <p-button icon="pi pi-window-maximize" (click)="popout.emit()"></p-button>
             </div>
         </div>
         <div class="ui-g">
@@ -17,8 +13,14 @@
                 {{data.bundesland}} - {{data.wahlkreis}}
             </div>
         </div>
-    </p-card>
-    <div [ngStyle]="{ 'width' : isPopup ? '800px' : 'unset' }">
+        <div class="ui-g">
+            <div class="ui-g-12 ui-lg-12 ui-md-12">
+                <i class="pi pi-user-plus"></i> {{data.reputationUp}}
+                <i class="pi pi-user-minus"></i> {{data.reputationDown}}
+            </div>
+        </div>
+    </p-panel>
+    <div style="margin-top: 5px" [ngStyle]="{ 'width' : isPopup ? '800px' : 'unset' }">
         <p-table title="stuff" [value]="data.vorfaelle">
             <ng-template pTemplate="header">
                 <tr *ngIf="isPopup">

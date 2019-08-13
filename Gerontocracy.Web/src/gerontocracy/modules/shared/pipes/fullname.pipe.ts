@@ -16,7 +16,7 @@ export class FullnamePipe implements PipeTransform {
     result = `${result} ${value.vorname} ${value.nachname}`;
 
     if (value.akadGradPost) {
-      result = `${result} ${value.akadGradPost}`;
+      result = `${result}, ${value.akadGradPost}`;
     }
 
     return result;
