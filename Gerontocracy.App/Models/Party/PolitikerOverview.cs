@@ -41,6 +41,11 @@
         public string Wahlkreis { get; set; }
 
         /// <summary>
+        /// Party
+        /// </summary>
+        public string ParteiKurzzeichen { get; set; }
+
+        /// <summary>
         /// State
         /// </summary>
         public string Bundesland { get; set; }

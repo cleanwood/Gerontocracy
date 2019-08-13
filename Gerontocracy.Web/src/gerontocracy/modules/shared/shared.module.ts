@@ -6,13 +6,16 @@ import { SharedAccountService } from './services/shared-account.service';
 import { SharedBoardService } from './services/shared-board.service';
 
 import { StringTrimPipe } from './pipes/string-trim.pipe';
+import { FullnamePipe } from './pipes/fullname.pipe';
 
 @NgModule({
   declarations: [
     StringTrimPipe,
+    FullnamePipe,
   ],
   exports: [
-    StringTrimPipe
+    StringTrimPipe,
+    FullnamePipe,
   ],
   imports: [
     CommonModule,

@@ -8,9 +8,12 @@
 }
 
 .geronto_content {
-  position: absolute;
-  bottom: 5px;
-  top: 56px;
+  margin-top: 5px;
+}
+
+.geronto_toolbar_wrapper {
+  width: 1184px;
+  margin: auto;
 }
 
 @media only screen and (max-width: 952px) {
@@ -28,6 +31,12 @@
 }
 
 @media only screen and (max-width: 1215px) {
+  .geronto_toolbar_wrapper {
+    width: auto;
+    margin-right: 8px;
+    margin-left: 8px;
+  }
+
   .geronto_container {
     width: auto;
     margin: auto;

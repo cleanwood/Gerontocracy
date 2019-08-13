@@ -5,6 +5,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HomeRoutingModule } from './home-routing.module';
 
+import { PanelModule } from 'primeng/panel';
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -14,6 +16,7 @@ import { HomeRoutingModule } from './home-routing.module';
     CommonModule,
     ReactiveFormsModule,
     HomeRoutingModule,
+    PanelModule
   ]
 })
 export class HomeModule { }

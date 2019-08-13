@@ -6,26 +6,29 @@
   <p-blockUI [blocked]="isDialogOpen">
   </p-blockUI>
 
-  <p-menubar [model]="items" class="geronto_toolbar">
-    <div *ngIf="!accountData">
-      <button pButton label="Login" icon="pi pi-sign-in" (click)="login()"></button>
-      <button pButton label="Registrieren" icon="pi pi-user-plus" style="margin-left:.25em" (click)="signup()"></button>
-    </div>
-    <div *ngIf="accountData">
-      <p-splitButton dir="rtl" [label]="accountData.userName" icon="pi pi-user" [model]="userMenu"></p-splitButton>
-    </div>
-  </p-menubar>
+  <div class="geronto_toolbar_wrapper">
+    <p-menubar [model]="items" class="geronto_toolbar">
+      <div *ngIf="!accountData">
+        <button pButton label="Login" icon="pi pi-sign-in" (click)="login()"></button>
+        <button pButton label="Registrieren" icon="pi pi-user-plus" style="margin-left:.25em"
+          (click)="signup()"></button>
+      </div>
+      <div *ngIf="accountData">
+        <p-splitButton [label]="accountData.userName" icon="pi pi-user" [model]="userMenu"></p-splitButton>
+      </div>
+    </p-menubar>
 
-  <p-menubar [model]="burger" class="geronto_burger">
-    <div *ngIf="!accountData">
-      <button pButton label="Login" icon="pi pi-sign-in" (click)="login($event)"></button>
-      <button pButton label="Registrieren" icon="pi pi-user-plus" style="margin-left:.25em"
-        (click)="signup($event)"></button>
-    </div>
-    <div *ngIf="accountData">
-      <p-splitButton dir="rtl" [label]="accountData.userName" icon="pi pi-user" [model]="userMenu"></p-splitButton>
-    </div>
-  </p-menubar>
+    <p-menubar [model]="burger" class="geronto_burger">
+      <div *ngIf="!accountData">
+        <button pButton label="Login" icon="pi pi-sign-in" (click)="login($event)"></button>
+        <button pButton label="Registrieren" icon="pi pi-user-plus" style="margin-left:.25em"
+          (click)="signup($event)"></button>
+      </div>
+      <div *ngIf="accountData">
+        <p-splitButton [label]="accountData.userName" icon="pi pi-user" [model]="userMenu"></p-splitButton>
+      </div>
+    </p-menubar>
+  </div>
 
   <p-sidebar [(visible)]="sidebarVisible">
     <p-menu [model]="items"></p-menu>
@@ -76,8 +79,8 @@
     <p-checkbox label="Login merken!" (onChange)="checkboxChanged($event)"></p-checkbox>
   </div>
   <p-footer>
-    <button pButton label="Einloggen" (click)="loginUser()"></button>
-    <button pButton label="Abbrechen" (click)="closeLoginForm()"></button>
+    <button pButton label="Einloggen" (click)="loginUser()" [disabled]="isLogingin"></button>
+    <button pButton label="Abbrechen" (click)="closeLoginForm()" [disabled]="isLogingin"></button>
   </p-footer>
 </p-dialog>
 
@@ -169,9 +172,3 @@
     <button pButton label="OK" (click)="closeConfirmation()"></button>
   </p-footer>
 </p-dialog>
-
-<span hidden #loginErrorContent>Fehler beim Login - Bitte die Login-Information überprüfen!</span>
-<span hidden #registrationTitle>Registrierung erfolgreich!</span>
-<span hidden #registrationContent>Bitte überprüfe deinen Posteingang um einen Bestätigungslink!</span>
-<span hidden #errorTitle>Fehler</span>
-<span hidden #errorMessage>Der Server lieferte einen unerwarteten Fehler - bitte probiere es später nocheinmal!</span>

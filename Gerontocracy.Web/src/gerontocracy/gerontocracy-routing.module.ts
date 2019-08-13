@@ -7,11 +7,11 @@ export const routes: Routes = [
     path: 'confirmemail',
     component: ConfirmemailComponent,
   },
-  // {
-  //   path: 'party',
-  //   loadChildren: './modules/party/party.module#PartyModule',
-  //   pathMatch: 'prefix'
-  // },
+  {
+    path: 'party',
+    loadChildren: './modules/party/party.module#PartyModule',
+    pathMatch: 'prefix'
+  },
   // {
   //   path: 'affair',
   //   loadChildren: './modules/affair/affair.module#AffairModule',
