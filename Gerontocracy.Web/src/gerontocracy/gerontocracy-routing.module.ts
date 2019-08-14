@@ -12,21 +12,21 @@ export const routes: Routes = [
     loadChildren: './modules/party/party.module#PartyModule',
     pathMatch: 'prefix'
   },
-  // {
-  //   path: 'affair',
-  //   loadChildren: './modules/affair/affair.module#AffairModule',
-  //   pathMatch: 'prefix'
-  // },
+  {
+    path: 'affair',
+    loadChildren: './modules/affair/affair.module#AffairModule',
+    pathMatch: 'prefix'
+  },
   // {
   //   path: 'board',
   //   loadChildren: './modules/board/board.module#BoardModule',
   //   pathMatch: 'prefix'
   // },
-  // {
-  //   path: 'home',
-  //   loadChildren: './modules/home/home.module#HomeModule',
-  //   pathMatch: 'prefix'
-  // },
+  {
+    path: 'home',
+    loadChildren: './modules/home/home.module#HomeModule',
+    pathMatch: 'prefix'
+  },
   // {
   //   path: 'admin',
   //   loadChildren: './modules/admin/admin.module#AdminModule',
