@@ -9,8 +9,11 @@
             </div>
         </div>
         <div class="ui-g">
-            <div class="ui-g-12 ui-md-8">
+            <div class="ui-g-12 ui-md-8" *ngIf="data.politiker">
                 {{data.politiker | fullname}}
+            </div>
+            <div class="ui-g-12 ui-md-8" *ngIf="!data.politiker">
+                Kein Verantwortlicher!
             </div>
             <div class="ui-g-12 ui-md-4" align="end">
                 <button style="margin-right: 5px" pButton icon="pi pi-plus" (click)="onVoteClicked(VoteType.up)"
@@ -18,9 +21,6 @@
                 <button pButton icon="pi pi-minus" (click)="onVoteClicked(VoteType.down)"
                     [ngClass]="{'ui-button-secondary': data.userVote !== VoteType.down}"></button>
             </div>
-        </div>
-        <div class="ui-g">
-
         </div>
     </p-panel>
     <div style="margin-top: 5px" [ngStyle]="{ 'width' : isPopup ? '800px' : 'unset' }">

@@ -94,8 +94,7 @@ namespace Gerontocracy.App.Controllers
         {
             if (ModelState.IsValid)
             {
-                _affairService.AddVorfall(User, _mapper.Map<bo.Vorfall>(data));
-                return Ok();
+                return Ok(_affairService.AddVorfall(User, _mapper.Map<bo.Vorfall>(data)));
             }
             else
                 return BadRequest(ModelState);

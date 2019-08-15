@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AffairComponent } from './components/affair.component';
 import { OverviewComponent } from './components/overview/overview.component';
-import { AddComponent } from './components/add/add.component';
 
 export const routes: Routes = [
     {
@@ -26,10 +25,6 @@ export const routes: Routes = [
             {
                 path: 'new',
                 component: OverviewComponent
-            },
-            {
-                path: 'add',
-                component: AddComponent
             },
             {
                 path: '',

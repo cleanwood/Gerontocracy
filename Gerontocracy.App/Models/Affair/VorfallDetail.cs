@@ -27,9 +27,14 @@ namespace Gerontocracy.App.Models.Affair
         public string Beschreibung { get; set; }
 
         /// <summary>
-        /// When was the affair-entry created
+        /// When was the entry created?
         /// </summary>
         public DateTime ErstelltAm { get; set; }
+
+        /// <summary>
+        /// Who created this entry?
+        /// </summary>
+        public Account.User ErstelltVon { get; set; }
 
         /// <summary>
         /// Is this good or bad?

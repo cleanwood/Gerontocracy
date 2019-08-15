@@ -1,0 +1,73 @@
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Message, DynamicDialogRef, DynamicDialogConfig } from 'primeng/api';
+import { AccountService } from '../../services/account.service';
+import { Login } from '../../models/login';
+
+@Component({
+  selector: 'app-login-dialog',
+  templateUrl: './login-dialog.component.html',
+  styleUrls: ['./login-dialog.component.scss']
+})
+export class LoginDialogComponent implements OnInit {
+
+  loginForm: FormGroup;
+  loginError: Message[];
+  isLogingIn: boolean;
+  rememberMe: boolean;
+
+  constructor(
+    private dialogRef: DynamicDialogRef,
+    private dialogConfig: DynamicDialogConfig,
+    private formBuilder: FormBuilder,
+    private accountService: AccountService) { }
+
+  ngOnInit() {
+    this.rememberMe = false;
+    this.isLogingIn = false;
+
+    this.buildLoginForm();
+  }
+
+  checkboxChanged(value: boolean) {
+    this.rememberMe = value;
+  }
+
+  loginUser() {
+    if (this.loginForm.valid) {
+      this.isLogingIn = true;
+      this.loginForm.disable();
+
+      const temp = this.loginForm.value;
+      const data: Login = {
+        name: temp.name,
+        password: temp.pass,
+        rememberMe: this.rememberMe
+      };
+
+      this.accountService.loginUser(data)
+        .toPromise()
+        .then(() => {
+          this.isLogingIn = false;
+          this.closeLoginForm();
+        })
+        .catch(() => {
+          this.loginError.push({ severity: 'error', summary: 'Fehler', detail: 'Login fehlgeschlagen! Bitte Zugangsdaten überprüfen!' });
+          this.isLogingIn = false;
+          this.loginForm.enable();
+        });
+    }
+  }
+
+  closeLoginForm(): void {
+    this.dialogRef.close();
+  }
+
+  private buildLoginForm() {
+    this.loginForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validators.pattern('[a-zA-Z0-9]*')]],
+      pass: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]],
+    });
+  }
+
+}

@@ -20,10 +20,6 @@ export class AffairService {
       + `lastname=${params.lastName}&`
       + `firstname=${params.firstName}&`
       + `party=${params.party}&`
-      // + `from=${params.from}&`
-      // + `to=${params.to}&`
-      // + `minreputation=${params.minReputation}&`
-      // + `maxreputation=${params.maxReputation}&`
       + `pagesize=${pageSize}&`
       + `pageindex=${pageIndex}`;
 
@@ -38,7 +34,7 @@ export class AffairService {
     return this.httpClient.post<void>(`api/affair/vote`, { vorfallId, voteType });
   }
 
-  public addAffair(obj: VorfallAdd): Observable<void> {
-    return this.httpClient.post<void>(`api/affair/vorfall`, obj);
+  public addAffair(obj: VorfallAdd): Observable<number> {
+    return this.httpClient.post<number>(`api/affair/vorfall`, obj);
   }
 }

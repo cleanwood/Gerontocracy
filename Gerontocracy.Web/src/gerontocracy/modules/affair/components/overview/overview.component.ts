@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { SearchParams } from '../../models/search-params';
 import { VorfallOverview } from '../../models/vorfall-overview';
 import { VorfallDetail } from '../../models/vorfall-detail';
 import { AffairService } from '../../services/affair.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { MessageService, DialogService } from 'primeng/api';
+import { AddDialogComponent } from '../add-dialog/add-dialog.component';
+import { SharedAccountService } from '../../../shared/services/shared-account.service';
+import { LoginDialogComponent } from '../../../../components/login-dialog/login-dialog.component';
 
 @Component({
   selector: 'app-overview',
@@ -25,10 +28,12 @@ export class OverviewComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private location: Location,
     private activatedRoute: ActivatedRoute,
     private affairService: AffairService,
+    private sharedAccountService: SharedAccountService,
     private messageService: MessageService,
-    private router: Router) { }
+    private dialogService: DialogService) { }
 
   ngOnInit() {
     this.popupVisible = false;
@@ -51,8 +56,6 @@ export class OverviewComponent implements OnInit {
   }
 
   loadData(): void {
-    this.pageIndex = 0;
-    this.maxResults = 0;
     this.isLoadingData = true;
     this.affairService.search(this.searchForm.value, this.pageSize, this.pageIndex)
       .toPromise()
@@ -64,10 +67,6 @@ export class OverviewComponent implements OnInit {
       .catch(n => this.messageService.add({ severity: 'error', summary: n.name, detail: n.Message }));
   }
 
-  // showVorfall(id: number) {
-  //   this.router.navigate([`affair/new/${id}`]);
-  // }
-
   showPopup(): void {
     this.popupVisible = true;
   }
@@ -78,11 +77,32 @@ export class OverviewComponent implements OnInit {
 
   showDetail(id: number) {
     this.detailData = null;
-
+    this.location.replaceState(`/affair/new/${id}`);
     this.affairService.getAffairDetail(id)
       .toPromise()
       .then(n => this.detailData = n)
       .catch(n => this.messageService.add({ severity: 'error', summary: n.name, detail: n.Message }));
+  }
+
+  addAffair() {
+    this.sharedAccountService.isLoggedIn().toPromise().then(n => {
+      if (n) {
+        this.dialogService.open(AddDialogComponent, {
+          closable: false,
+          header: 'Neuen Vorfall einreichen',
+          width: '800px',
+        });
+      } else {
+        this.dialogService.open(LoginDialogComponent,
+          {
+            header: 'Login',
+            width: '407px',
+            closable: false,
+          })
+          .onClose
+          .subscribe(() => window.location.reload());
+      }
+    });
   }
 
   paginate(evt: any) {

@@ -1,0 +1,45 @@
+<div [formGroup]="formGroup">
+    <div class="ui-fluid">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <div class="ui-inputgroup">
+                    <span class="ui-inputgroup-addon"><i class="pi pi-globe"></i></span>
+                    <input type="text" pInputText placeholder="Url" formControlName="url">
+                    <button pButton type="button" icon="pi pi-external-link" (click)="onTestUrlClicked()"></button>
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <p-message severity="error" text="Url ist ein Pflichtfeld!"
+                        *ngIf="formGroup.controls.url.hasError('required') && formGroup.controls.url.touched"
+                        style="margin-top: 5px">
+                    </p-message>
+                    <p-message severity="error" text="Url nicht im richtigen Format! (zB: https://www.google.at/)"
+                        *ngIf="formGroup.controls.url.hasError('pattern') && formGroup.controls.url.touched"
+                        style="margin-top: 5px">
+                    </p-message>
+                </div>
+            </div>
+            <div class="ui-g-12">
+                <div class="ui-inputgroup">
+                    <span class="ui-inputgroup-addon"><i class="pi pi-pencil"></i></span>
+                    <input type="text" pInputText placeholder="Zusatz" formControlName="zusatz">
+                </div>
+
+                <div style="display: flex; flex-direction: column;">
+                    <p-message severity="error" text="Bitte Zusatzinfo angeben!"
+                        *ngIf="formGroup.controls.zusatz.hasError('required') && formGroup.controls.zusatz.touched"
+                        style="margin-top: 5px">
+                    </p-message>
+                    <p-message severity="error" text="Zusatzinfo darf maximal 255 Zeichen lang sein!"
+                        *ngIf="formGroup.controls.zusatz.hasError('maxlength') && formGroup.controls.zusatz.touched"
+                        style="margin-top: 5px">
+                    </p-message>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div align="end">
+        <button pButton (click)="onSaveClicked()" [label]="'Quelle ' + (data ? 'bearbeiten' : 'hinzufügen')"
+            style="margin-right: 5px"></button>
+        <button pButton (click)="onCancelClicked()" label="Abbrechen" class="ui-button-secondary"></button>
+    </div>
+</div>

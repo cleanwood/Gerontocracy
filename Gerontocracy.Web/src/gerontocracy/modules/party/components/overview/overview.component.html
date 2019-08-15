@@ -33,7 +33,7 @@
             <div class="ui-g-12">
                 <p-panel header="Übersicht">
                     <p-paginator [rows]="pageSize" [showCurrentPageReport]="true" [totalRecords]="maxResults"
-                        [rowsPerPageOptions]="[10,20,30]" (onPageChange)="paginate($event)"></p-paginator>
+                        [rowsPerPageOptions]="[10,25,50]" (onPageChange)="paginate($event)"></p-paginator>
                     <div style="margin-top: 7px">
                         <p-table [value]="data">
                             <ng-template pTemplate="header">

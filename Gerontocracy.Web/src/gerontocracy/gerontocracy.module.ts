@@ -21,13 +21,21 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { PanelModule } from 'primeng/panel';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 import { ConfirmemailComponent } from './components/confirmemail/confirmemail.component';
+import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
+import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
+import { RegistrationConfirmDialogComponent } from './components/registration-confirm-dialog/registration-confirm-dialog.component';
+import { DialogService } from 'primeng/api';
 
 @NgModule({
   declarations: [
     GerontocracyComponent,
     ConfirmemailComponent,
+    LoginDialogComponent,
+    RegisterDialogComponent,
+    RegistrationConfirmDialogComponent,
   ],
   imports: [
     GerontocracyRoutingModule,
@@ -53,9 +61,15 @@ import { ConfirmemailComponent } from './components/confirmemail/confirmemail.co
     BlockUIModule,
     CheckboxModule,
     SplitButtonModule,
-    PanelModule
+    PanelModule,
+    DynamicDialogModule
   ],
-  providers: [],
-  bootstrap: [GerontocracyComponent]
+  providers: [DialogService],
+  bootstrap: [GerontocracyComponent],
+  entryComponents: [
+    RegisterDialogComponent,
+    LoginDialogComponent,
+    RegistrationConfirmDialogComponent
+  ]
 })
 export class AppModule { }
