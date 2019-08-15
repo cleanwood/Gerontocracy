@@ -19,7 +19,6 @@ export class OverviewComponent implements OnInit {
   maxResults = 0;
   pageIndex = 0;
   searchForm: FormGroup;
-  searchParams: SearchParams;
   data: VorfallOverview[];
   detailData: VorfallDetail;
   isLoadingData = false;
@@ -38,11 +37,7 @@ export class OverviewComponent implements OnInit {
       title: [''],
       lastName: [''],
       firstName: [''],
-      party: [''],
-      from: [''],
-      to: [''],
-      maxReputation: [100],
-      minReputation: [-100]
+      party: ['']
     });
 
     this.activatedRoute.params.subscribe(n => {
@@ -56,11 +51,10 @@ export class OverviewComponent implements OnInit {
   }
 
   loadData(): void {
-    this.searchParams = this.searchForm.value;
     this.pageIndex = 0;
     this.maxResults = 0;
     this.isLoadingData = true;
-    this.affairService.search(this.searchParams, this.pageSize, this.pageIndex)
+    this.affairService.search(this.searchForm.value, this.pageSize, this.pageIndex)
       .toPromise()
       .then(n => {
         this.data = n.data;

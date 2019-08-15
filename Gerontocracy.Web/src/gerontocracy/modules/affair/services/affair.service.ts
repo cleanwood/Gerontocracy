@@ -16,13 +16,14 @@ export class AffairService {
 
   public search(params: SearchParams, pageSize: number, pageIndex: number): Observable<SearchResult> {
     const request = `api/affair/affairsearch?`
-      + `lastname=${params.nachname}&`
-      + `firstname=${params.vorname}&`
-      + `party=${params.parteiName}&`
-      + `from=${params.from}&`
-      + `to=${params.to}&`
-      + `minreputation=${params.minReputation}&`
-      + `maxreputation=${params.maxReputation}&`
+      + `title=${params.title}&`
+      + `lastname=${params.lastName}&`
+      + `firstname=${params.firstName}&`
+      + `party=${params.party}&`
+      // + `from=${params.from}&`
+      // + `to=${params.to}&`
+      // + `minreputation=${params.minReputation}&`
+      // + `maxreputation=${params.maxReputation}&`
       + `pagesize=${pageSize}&`
       + `pageindex=${pageIndex}`;
 

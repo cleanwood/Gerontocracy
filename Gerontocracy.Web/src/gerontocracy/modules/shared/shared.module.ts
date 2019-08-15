@@ -7,15 +7,18 @@ import { SharedBoardService } from './services/shared-board.service';
 
 import { StringTrimPipe } from './pipes/string-trim.pipe';
 import { FullnamePipe } from './pipes/fullname.pipe';
+import { UrlPipe } from './pipes/url.pipe';
 
 @NgModule({
   declarations: [
     StringTrimPipe,
     FullnamePipe,
+    UrlPipe,
   ],
   exports: [
     StringTrimPipe,
     FullnamePipe,
+    UrlPipe,
   ],
   imports: [
     CommonModule,

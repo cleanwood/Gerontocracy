@@ -81,6 +81,8 @@ export class OverviewComponent implements OnInit {
   showDetail(id: number) {
     this.detailData = null;
 
+    this.location.replaceState(`party/${id}`);
+
     this.partyService.getPolitikerDetail(id)
       .toPromise()
       .then(n => this.detailData = n)
