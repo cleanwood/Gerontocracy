@@ -35,7 +35,6 @@ export class DetailviewComponent implements OnInit {
   }
 
   private convertToTreeNode(data: Post): TreeNode {
-    console.log(data);
     return {
       label: data.userName,
       data: { ...data, showReply: false },
@@ -98,7 +97,11 @@ export class DetailviewComponent implements OnInit {
         closable: false,
       })
       .onClose
-      .subscribe(() => window.location.reload());
+      .subscribe(m => {
+        if (m) {
+          window.location.reload();
+        }
+      });
   }
 
   reply(node: TreeNode, value: string) {

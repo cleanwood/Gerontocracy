@@ -72,8 +72,8 @@ export class RegisterDialogComponent implements OnInit {
     }
   }
 
-  closeRegisterForm() {
-    this.dialogRef.close();
+  closeRegisterForm(reloadScreen: boolean) {
+    this.dialogRef.close(reloadScreen);
   }
 
   registerUser() {
@@ -97,7 +97,7 @@ export class RegisterDialogComponent implements OnInit {
               width: '300px',
               header: 'Registrierung erfolgreich',
               closable: false,
-            }).onClose.toPromise().then(this.dialogRef.close);
+            }).onClose.toPromise().then(() => this.closeRegisterForm(true));
         })
         .catch(() => {
           this.isRegistering = false;

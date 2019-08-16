@@ -1,1 +1,61 @@
-<p>add-dialog works!</p>
+<div class="ui-fluid">
+    <div class="ui-g" [formGroup]="formGroup">
+        <div class="ui-g-12 ui-md-12">
+            <div class="ui-inputgroup">
+                <span class="ui-inputgroup-addon"><i class="pi pi-copy"></i></span>
+                <input type="text" pInputText formControlName="titel" placeholder="Titel">
+            </div>
+            <div style="display: flex; flex-direction: column;">
+                <p-message severity="error" text="Kein Titel eingegeben!"
+                    *ngIf="formGroup.controls.titel.hasError('required') && formGroup.controls.titel.touched"
+                    style="margin-top: 5px">
+                </p-message>
+                <p-message severity="error" text="Titel darf maximal 50 Zeichen lang sein!"
+                    *ngIf="formGroup.controls.titel.hasError('maxlength') && formGroup.controls.titel.touched"
+                    style="margin-top: 5px">
+                </p-message>
+            </div>
+        </div>
+        <div class="ui-g-12 ui-md-12">
+            <div class="ui-inputgroup">
+                <textarea pInputTextArea placeholder="Erster Kommentar" rows="10" style="width: 100%"
+                    formControlName="content"></textarea>
+            </div>
+            <div style="display: flex; flex-direction: column;">
+                <p-message severity="error" text="Keinen Inhalt eingegeben!"
+                    *ngIf="formGroup.controls.content.hasError('required') && formGroup.controls.content.touched"
+                    style="margin-top: 5px">
+                </p-message>
+                <p-message severity="error" text="Inhalt darf maximal 4000 Zeichen lang sein!"
+                    *ngIf="formGroup.controls.content.hasError('maxlength') && formGroup.controls.content.touched"
+                    style="margin-top: 5px">
+                </p-message>
+            </div>
+        </div>
+    </div>
+    <div class="ui-g">
+        <div class="ui-g-12">
+            <div class="ui-inputgroup">
+                <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
+                <p-autoComplete [suggestions]="options" (completeMethod)="getSuggestions($event)"
+                    [(ngModel)]="selectedSelection" field="fulltext" [forceSelection]="true"
+                    [disabled]="!!selectedSelection" [readonly]="!!selectedSelection"
+                    placeholder="Vorfall auswählen (optional)">
+                    <ng-template let-item pTemplate="item">
+                        {{item.fulltext}}
+                    </ng-template>
+                </p-autoComplete>
+                <button pButton icon="pi pi-trash" *ngIf="selectedSelection" (click)="unlockSelection()"></button>
+            </div>
+        </div>
+    </div>
+    <div class="ui-g">
+        <div class="ui-g-12" align="end">
+            <p-button icon="pi pi-cloud-upload" style="margin-right: 5px" (click)="addThread($event)"
+                label="Thread erstellen">
+            </p-button>
+            <p-button icon="pi pi-times" styleClass="ui-button-secondary" (click)="close()" label="Abbrechen">
+            </p-button>
+        </div>
+    </div>
+</div>

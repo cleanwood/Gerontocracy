@@ -14,8 +14,8 @@
                                 <input type="text" pInputText formControlName="title" placeholder="Titel">
                             </div>
                         </div>
-                        <div class="ui-g-12" align="end">
-                            <p-button label="Suchen" icon="pi pi-search" (click)="loadData()" style="margin-right: 5px">
+                        <div class="ui-g-12" style="display: flex; justify-content: space-between;" align="end">
+                            <p-button label="Suchen" icon="pi pi-search" (click)="loadData()">
                             </p-button>
                             <p-button label="Neuer Thread" icon="pi pi-plus" (click)="addThread()">
                             </p-button>
@@ -67,5 +67,5 @@
 </div>
 
 <p-dialog *ngIf="detailData" header="Detailansicht" [style]="{width: '512'}" [(visible)]="popupVisible">
-    <!-- <app-detailview [data]="detailData" [isPopup]="true"></app-detailview> -->
+    <app-detailview [data]="detailData" [isPopup]="true"></app-detailview>
 </p-dialog>

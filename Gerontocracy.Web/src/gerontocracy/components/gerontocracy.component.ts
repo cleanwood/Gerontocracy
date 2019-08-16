@@ -97,7 +97,11 @@ export class GerontocracyComponent implements OnInit {
         closable: false,
       })
       .onClose
-      .subscribe(() => window.location.reload());
+      .subscribe(n => {
+        if (n) {
+          window.location.reload();
+        }
+      });
   }
 
   signup(): void {
@@ -106,6 +110,10 @@ export class GerontocracyComponent implements OnInit {
         header: 'Registrieren',
         width: '407',
         closable: false,
+      }).onClose.subscribe(m => {
+        if (m) {
+          window.location.reload();
+        }
       });
   }
 
@@ -113,6 +121,6 @@ export class GerontocracyComponent implements OnInit {
     this.accountService
       .logoutUser()
       .toPromise()
-      .then(() => location.reload());
+      .then(() => window.location.reload());
   }
 }

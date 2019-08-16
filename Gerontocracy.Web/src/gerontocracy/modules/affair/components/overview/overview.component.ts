@@ -100,7 +100,11 @@ export class OverviewComponent implements OnInit {
             closable: false,
           })
           .onClose
-          .subscribe(() => window.location.reload());
+          .subscribe(m => {
+            if (m) {
+              window.location.reload();
+            }
+          });
       }
     });
   }

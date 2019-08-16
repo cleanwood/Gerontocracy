@@ -8,7 +8,7 @@
             <div class="ui-g-12">
                 <p-panel header="Suchparameter" toggleable="true" [collapsed]="false">
                     <div class="ui-fluid ui-g" [formGroup]="searchForm">
-                        <div class="ui-g-12 ui-md-8 ui-g-nopad">
+                        <div class="ui-g-12 ui-md-8">
                             <div class="ui-inputgroup">
                                 <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
                                 <input style="margin-right: 5px" type="text" pInputText formControlName="firstName"
@@ -17,13 +17,13 @@
                                     placeholder="Nachname">
                             </div>
                         </div>
-                        <div class="ui-g-12 ui-md-4 ui-g-nopad">
+                        <div class="ui-g-12 ui-md-4">
                             <div class="ui-inputgroup">
                                 <span class="ui-inputgroup-addon"><i class="pi pi-users"></i></span>
                                 <input type="text" pInputText formControlName="party" placeholder="Partei">
                             </div>
                         </div>
-                        <div class="ui-g-12" align="end">
+                        <div class="ui-g-12" style="display: flex; justify-content: space-between;" align="end">
                             <p-button label="Suchen" icon="pi pi-search" (click)="loadData()">
                             </p-button>
                         </div>

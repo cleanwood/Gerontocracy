@@ -21,7 +21,6 @@ import { ReputationType } from '../../../shared/models/reputation-type';
 })
 export class AddDialogComponent implements OnInit {
 
-  isRefreshingAutocomplete: boolean;
   formGroup: FormGroup;
   sources: QuelleData[];
   showSourcesError: boolean;
@@ -47,7 +46,6 @@ export class AddDialogComponent implements OnInit {
 
   ngOnInit() {
     this.sources = [];
-    this.isRefreshingAutocomplete = false;
     this.reputationType = ReputationType.Neutral;
     this.showSourcesError = false;
     this.isFormChecked = false;
@@ -72,16 +70,12 @@ export class AddDialogComponent implements OnInit {
   }
 
   getSuggestions(evt: any) {
-    if (!this.isRefreshingAutocomplete) {
-      this.isRefreshingAutocomplete = true;
-      this.sharedPartyService
-        .getPoliticianSelection(evt.query)
-        .toPromise()
-        .then(n => {
-          this.options = n.map(m => ({ ...m, fullname: new FullnamePipe().transform(m) }));
-        })
-        .then(() => this.isRefreshingAutocomplete = false);
-    }
+    this.sharedPartyService
+      .getPoliticianSelection(evt.query)
+      .toPromise()
+      .then(n => {
+        this.options = n.map(m => ({ ...m, fullname: new FullnamePipe().transform(m) }));
+      });
   }
 
   unlockPolitiker() {

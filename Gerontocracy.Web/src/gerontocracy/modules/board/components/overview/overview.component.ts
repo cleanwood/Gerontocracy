@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { MessageService, DialogService, DynamicDialogConfig } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
 import { BoardService } from '../../services/board.service';
 import { ThreadOverview } from '../../models/thread-overview';
 import { ThreadDetail } from '../../models/thread-detail';
+import { SharedAccountService } from '../../../shared/services/shared-account.service';
+import { LoginDialogComponent } from 'Gerontocracy.Web/src/gerontocracy/components/login-dialog/login-dialog.component';
+import { AddDialogComponent } from '../add-dialog/add-dialog.component';
 
 @Component({
   selector: 'app-overview',
@@ -19,7 +22,9 @@ export class OverviewComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private boardService: BoardService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private sharedAccountService: SharedAccountService,
+    public dialogService: DialogService
   ) { }
 
   pageSize = 25;
@@ -58,6 +63,40 @@ export class OverviewComponent implements OnInit {
     this.loadData();
   }
 
+  showPopup(): void {
+    this.popupVisible = true;
+  }
+
+  addThread(): void {
+    this.sharedAccountService.isLoggedIn().toPromise().then(r => {
+      if (r) {
+        this.dialogService.open(AddDialogComponent, {
+          closable: false,
+          header: 'Neuen Thread öffnen',
+          width: '800px',
+        }).onClose
+          .subscribe(n => {
+            if (n) {
+              window.location.reload();
+            }
+          });
+      } else {
+        this.dialogService.open(LoginDialogComponent,
+          {
+            header: 'Login',
+            width: '407px',
+            closable: false,
+          })
+          .onClose
+          .subscribe(m => {
+            if (m) {
+              window.location.reload();
+            }
+          });
+      }
+    });
+  }
+
   loadData(): void {
     this.pageIndex = 0;
     this.maxResults = 0;
@@ -75,7 +114,7 @@ export class OverviewComponent implements OnInit {
   showDetail(id: number) {
     this.detailData = null;
 
-    this.location.replaceState(`thread/new/${id}`);
+    this.location.replaceState(`board/new/${id}`);
 
     this.boardService.getThread(id)
       .toPromise()

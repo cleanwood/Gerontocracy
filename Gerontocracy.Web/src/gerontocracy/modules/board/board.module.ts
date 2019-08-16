@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BoardComponent } from './components/board.component';
 import { OverviewComponent } from './components/overview/overview.component';
-import { ThreadComponent } from './components/thread/thread.component';
 import { AddDialogComponent } from './components/add-dialog/add-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -19,15 +18,18 @@ import { BlockUIModule } from 'primeng/blockui';
 import { TreeModule } from 'primeng/tree';
 
 import { SharedModule } from '../shared/shared.module';
-import { MessageService } from 'primeng/api';
+import { MessageService, DialogService } from 'primeng/api';
 import { BoardService } from './services/board.service';
 import { DetailviewComponent } from './components/detailview/detailview.component';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
 
 @NgModule({
   declarations: [
     BoardComponent,
     OverviewComponent,
-    ThreadComponent,
     AddDialogComponent,
     DetailviewComponent
   ],
@@ -48,12 +50,20 @@ import { DetailviewComponent } from './components/detailview/detailview.componen
     DialogModule,
     BlockUIModule,
     TreeModule,
+    DynamicDialogModule,
+    AutoCompleteModule,
+    MessagesModule,
+    MessageModule,
 
     SharedModule
   ],
   providers: [
     MessageService,
-    BoardService
-  ]
+    BoardService,
+    DialogService
+  ],
+  entryComponents: [
+    AddDialogComponent
+  ],
 })
 export class BoardModule { }

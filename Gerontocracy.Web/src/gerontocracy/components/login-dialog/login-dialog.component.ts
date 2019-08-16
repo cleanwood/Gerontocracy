@@ -49,7 +49,7 @@ export class LoginDialogComponent implements OnInit {
         .toPromise()
         .then(() => {
           this.isLogingIn = false;
-          this.closeLoginForm();
+          this.closeLoginForm(true);
         })
         .catch(() => {
           this.loginError.push({ severity: 'error', summary: 'Fehler', detail: 'Login fehlgeschlagen! Bitte Zugangsdaten überprüfen!' });
@@ -59,8 +59,8 @@ export class LoginDialogComponent implements OnInit {
     }
   }
 
-  closeLoginForm(): void {
-    this.dialogRef.close();
+  closeLoginForm(reloadScreen: boolean): void {
+    this.dialogRef.close(reloadScreen);
   }
 
   private buildLoginForm() {
