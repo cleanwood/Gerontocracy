@@ -17,11 +17,11 @@ export const routes: Routes = [
     loadChildren: './modules/affair/affair.module#AffairModule',
     pathMatch: 'prefix'
   },
-  // {
-  //   path: 'board',
-  //   loadChildren: './modules/board/board.module#BoardModule',
-  //   pathMatch: 'prefix'
-  // },
+  {
+    path: 'board',
+    loadChildren: './modules/board/board.module#BoardModule',
+    pathMatch: 'prefix'
+  },
   {
     path: 'home',
     loadChildren: './modules/home/home.module#HomeModule',
