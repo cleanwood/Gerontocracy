@@ -9,10 +9,10 @@
             </div>
         </div>
         <div class="ui-g">
-            <div class="ui-g-12 ui-md-8" *ngIf="data.politiker">
-                {{data.politiker | fullname}}
+            <div class="ui-g-12 ui-md-8" *ngIf="data.politikerOverview">
+                {{data.politikerOverview | fullname}}
             </div>
-            <div class="ui-g-12 ui-md-8" *ngIf="!data.politiker">
+            <div class="ui-g-12 ui-md-8" *ngIf="!data.politikerOverview">
                 Kein Verantwortlicher!
             </div>
             <div class="ui-g-12 ui-md-4" align="end">

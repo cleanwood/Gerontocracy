@@ -47,15 +47,10 @@
         </div>
     </div>
     <div style="margin-top: 5px; display: flex; justify-content: space-between">
-        <div>
-            <p-message severity="error" text="Es muss mindestens eine Quelle angegeben werden!" *ngIf="showSourcesError"
-                style="margin-top: 5px">
-            </p-message>
-        </div>
         <div style="display: flex; flex-direction: row;">
             <button pButton icon="pi pi-cloud-upload" style="margin-right: 5px" (click)="ok()" label="Einreichen">
             </button>
-            <button pButton icon="pi pi-times" class="ui-button-secondary" (click)="close()" label="Abbrechen">
+            <button pButton icon="pi pi-times" class="ui-button-secondary" (click)="close(false)" label="Abbrechen">
             </button>
         </div>
     </div>

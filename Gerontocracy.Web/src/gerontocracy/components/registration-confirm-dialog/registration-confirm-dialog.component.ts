@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DynamicDialogRef } from 'primeng/api';
 
 @Component({
   selector: 'app-registration-confirm-dialog',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistrationConfirmDialogComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialogReference: DynamicDialogRef) { }
 
   ngOnInit() {
   }
 
+  closeConfirmation() {
+    this.dialogReference.close();
+  }
 }

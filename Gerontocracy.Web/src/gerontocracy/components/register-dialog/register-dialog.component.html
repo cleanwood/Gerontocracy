@@ -72,7 +72,7 @@
 
   <div align="end" style="margin-top: 5px">
     <button pButton label="Registrieren" (click)="registerUser()" [disabled]="isRegistering" style="margin-right: 5px"></button>
-    <button pButton label="Abbrechen" (click)="closeRegisterForm()" [disabled]="isRegistering"></button>
+    <button pButton label="Abbrechen" (click)="closeRegisterForm(false)" [disabled]="isRegistering"></button>
   </div>
 </div>
 
