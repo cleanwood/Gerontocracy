@@ -11,7 +11,7 @@ import { SharedModule } from '../shared/shared.module';
 import { AddDialogComponent } from './components/add-dialog/add-dialog.component';
 import { SourceDialogComponent } from './components/source-dialog/source-dialog.component';
 
-import { MessageService, DialogService, DynamicDialogRef } from 'primeng/api';
+import { MessageService, DialogService } from 'primeng/api';
 import { PanelModule } from 'primeng/panel';
 import { PaginatorModule } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
@@ -20,14 +20,11 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
 import { BlockUIModule } from 'primeng/blockui';
-import { FieldsetModule } from 'primeng/fieldset';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { RadioButtonModule } from 'primeng/radiobutton';
-
-
 
 @NgModule({
   declarations: [
@@ -52,7 +49,6 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     InputTextModule,
     DialogModule,
     BlockUIModule,
-    FieldsetModule,
     InputTextareaModule,
     AutoCompleteModule,
     MessagesModule,
@@ -68,9 +64,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   providers: [
     MessageService,
     AffairService,
-    MessageService,
     DialogService,
-    DynamicDialogRef
   ]
 })
 export class AffairModule { }

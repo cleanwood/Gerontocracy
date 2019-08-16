@@ -116,7 +116,8 @@ namespace Gerontocracy.Core.Providers
             "     ON       u.\"Id\" = po.\"UserId\" " +
             "     GROUP BY hi.\"ThreadId\") num " +
             "       ON       num.\"ThreadId\" = threads.\"Id\" " +
-            "WHERE    threads.\"Title\" LIKE @title " +
+            "WHERE    threads.\"Title\" ILIKE @title " +
+            "ORDER BY posts.\"CreatedOn\" DESC " +
             "LIMIT    @limit " +
             "OFFSET   @offset ";
 

@@ -1,7 +1,5 @@
 import { Component, OnInit, } from '@angular/core';
-import { Location } from '@angular/common';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AffairService } from '../../services/affair.service';
 import { SharedPartyService } from '../../../shared/services/shared-party.service';
 import { DialogService, MessageService, DynamicDialogRef } from 'primeng/api';
@@ -24,7 +22,6 @@ export class AddDialogComponent implements OnInit {
   formGroup: FormGroup;
   sources: QuelleData[];
   showSourcesError: boolean;
-  isFormChecked: boolean;
 
   isLoadingData: boolean;
 
@@ -35,7 +32,6 @@ export class AddDialogComponent implements OnInit {
   public ReputationType = ReputationType;
 
   constructor(
-    private location: Location,
     private formBuilder: FormBuilder,
     private sharedPartyService: SharedPartyService,
     private dialogService: DialogService,
@@ -48,25 +44,12 @@ export class AddDialogComponent implements OnInit {
     this.sources = [];
     this.reputationType = ReputationType.Neutral;
     this.showSourcesError = false;
-    this.isFormChecked = false;
     this.isLoadingData = false;
     this.formGroup = this.formBuilder.group({
       titel: ['', [Validators.maxLength(50), Validators.required]],
       beschreibung: ['', [Validators.maxLength(4000), Validators.required]],
       reputationType: [null],
     });
-
-    this.formGroup.setValidators(this.lockedValidator());
-  }
-
-  lockedValidator(): ValidatorFn {
-    return (n: FormGroup): ValidationErrors => {
-      if (n.controls.politikername && n.controls.politikerName.value.length > 0 &&
-        !(n.controls.politikerName.disabled && n.controls.politikerId)) {
-        n.controls.politikerName.setErrors({ notLocked: true });
-      }
-      return;
-    };
   }
 
   getSuggestions(evt: any) {
@@ -105,7 +88,6 @@ export class AddDialogComponent implements OnInit {
   }
 
   public addAffair() {
-    this.isFormChecked = true;
     if (this.formGroup.valid && this.sources.length > 0) {
       this.isLoadingData = true;
 

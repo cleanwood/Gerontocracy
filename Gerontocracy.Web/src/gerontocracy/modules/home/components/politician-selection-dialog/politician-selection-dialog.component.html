@@ -1,0 +1,62 @@
+<div class="ui-fluid">
+    <div class="ui-g" [formGroup]="formGroup">
+        <div class="ui-g-12 ui-md-12">
+            <div class="ui-inputgroup">
+                <textarea pInputTextArea placeholder="Dein Kommentar" rows="10" style="width: 100%"
+                    formControlName="beschreibung"></textarea>
+            </div>
+            <div style="display: flex; flex-direction: column;">
+                <p-message severity="error" text="Keine Beschreibung eingegeben!"
+                    *ngIf="formGroup.controls.beschreibung.hasError('required') && formGroup.controls.beschreibung.touched"
+                    style="margin-top: 5px">
+                </p-message>
+                <p-message severity="error" text="Beschreibung darf maximal 4000 Zeichen lang sein!"
+                    *ngIf="formGroup.controls.beschreibung.hasError('maxlength') && formGroup.controls.beschreibung.touched"
+                    style="margin-top: 5px">
+                </p-message>
+            </div>
+        </div>
+    </div>
+    <div class="ui-g">
+        <div class="ui-g-12 ui-md-8">
+            <div class="ui-inputgroup">
+                <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
+                <p-autoComplete [suggestions]="options" (completeMethod)="getSuggestions($event)"
+                    [(ngModel)]="politiker" field="fullname" [forceSelection]="true" [disabled]="!!politiker"
+                    [readonly]="!!politiker" placeholder="Politiker auswählen">
+                    <ng-template let-item pTemplate="item">
+                        {{item | fullname}}
+                    </ng-template>
+                </p-autoComplete>
+                <button pButton icon="pi pi-trash" *ngIf="politiker" (click)="unlockPolitiker()"></button>
+            </div>
+        </div>
+        <div class="ui-g-12 ui-md-4" style="display: flex; flex-direction: row;" *ngIf="politiker">
+            <div style="margin-right: 5px">
+                <p-radioButton name="reputation" label="Positiv" [(ngModel)]="reputationType"
+                    [value]="ReputationType.Positive"></p-radioButton>
+            </div>
+            <div style="margin-right: 5px">
+                <p-radioButton name="reputation" label="Neutral" [(ngModel)]="reputationType"
+                    [value]="ReputationType.Neutral"></p-radioButton>
+            </div>
+            <div style="margin-right: 5px">
+                <p-radioButton name="reputation" label="Negativ" [(ngModel)]="reputationType"
+                    [value]="ReputationType.Negative"></p-radioButton>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top: 5px; display: flex; justify-content: space-between">
+        <div>
+            <p-message severity="error" text="Es muss mindestens eine Quelle angegeben werden!" *ngIf="showSourcesError"
+                style="margin-top: 5px">
+            </p-message>
+        </div>
+        <div style="display: flex; flex-direction: row;">
+            <button pButton icon="pi pi-cloud-upload" style="margin-right: 5px" (click)="ok()" label="Einreichen">
+            </button>
+            <button pButton icon="pi pi-times" class="ui-button-secondary" (click)="close()" label="Abbrechen">
+            </button>
+        </div>
+    </div>
+</div>
