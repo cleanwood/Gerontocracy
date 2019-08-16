@@ -35,7 +35,7 @@ namespace Gerontocracy.Core.Providers
 
         private const string ConstNoFaction = "OK";
 
-        public void AddVorfall(ClaimsPrincipal user, Vorfall vorfall)
+        public long AddVorfall(ClaimsPrincipal user, Vorfall vorfall)
         {
             var userId = _accountService.GetIdOfUser(user);
 
@@ -44,7 +44,7 @@ namespace Gerontocracy.Core.Providers
             vorfallDb.Legitimitaet = new db.Affair.Vote
             {
                 UserId = userId,
-                VoteType = Data.Entities.Affair.VoteType.Up
+                VoteType = db.Affair.VoteType.Up
             }.AsList();
 
             var threadDb = new Thread
@@ -64,6 +64,8 @@ namespace Gerontocracy.Core.Providers
 
             _context.Add(threadDb);
             _context.SaveChanges();
+
+            return vorfallDb.Id;
         }
 
         public VorfallOverview GetVorfall(long id)
@@ -117,6 +119,7 @@ namespace Gerontocracy.Core.Providers
                 Titel = vorfall.Titel,
                 ErstelltAm = vorfall.ErstelltAm,
                 Beschreibung = vorfall.Beschreibung,
+                ErstelltVon = _mapper.Map<BusinessObjects.Account.User>(vorfall.User),
                 Politiker = _mapper.Map<PolitikerOverview>(vorfall.Politiker),
                 Quellen = _mapper.Map<List<QuelleOverview>>(vorfall.Quellen),
                 ReputationType = _mapper.Map<ReputationType>(vorfall.ReputationType),
@@ -183,7 +186,7 @@ namespace Gerontocracy.Core.Providers
                     - n.Legitimitaet.Count(m => m.VoteType == Data.Entities.Affair.VoteType.Up)
                     >= param.MinReputation.Value && n.ReputationType == db.Affair.ReputationType.Negative)
                 );
-            
+
             var dbResult = query.Select(n => new VorfallOverview()
             {
                 ErstelltAm = n.ErstelltAm,
@@ -192,7 +195,7 @@ namespace Gerontocracy.Core.Providers
                 ParteiName =
                     n.Politiker.Partei != null ?
                     n.Politiker.Partei.Kurzzeichen :
-                    n.Politiker != null ? 
+                    n.Politiker != null ?
                     ConstNoFaction :
                     null,
                 PolitikerId = n.PolitikerId,
@@ -207,7 +210,11 @@ namespace Gerontocracy.Core.Providers
             var result = new SearchResult<VorfallOverview>()
             {
                 MaxResults = dbResult.Count(),
-                Data = dbResult.Skip(pageSize * pageIndex).Take(pageSize).ToList()
+                Data = dbResult
+                    .OrderByDescending(n => n.ErstelltAm)
+                    .Skip(pageSize * pageIndex)
+                    .Take(pageSize)
+                    .ToList()
             };
 
             return result;
@@ -244,6 +251,7 @@ namespace Gerontocracy.Core.Providers
 
         private db.Affair.Vorfall GetVorfallRaw(long id)
             => _context.Vorfall
+               .Include(n => n.User)
                .Include(n => n.Legitimitaet)
                .Include(n => n.Politiker)
                    .ThenInclude(n => n.Partei)

@@ -1,0 +1,64 @@
+<div class="ui-fluid">
+    <p-panel header="Allgemeine Infos">
+        <div class="ui-g">
+            <div class="ui-g-12 ui-lg-8 ui-md-12">
+                <b style="margin-top: 0px">{{data.titel}}</b>
+            </div>
+            <div class="ui-g-12 ui-lg-4 ui-md-12" *ngIf="!isPopup" align="end">
+                <p-button icon="pi pi-window-maximize" (click)="popout.emit()"></p-button>
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-8" *ngIf="data.politiker">
+                {{data.politiker}}
+            </div>
+            <div class="ui-g-12 ui-md-8" *ngIf="!data.politiker">
+                Kein Verantwortlicher!
+            </div>
+        </div>
+    </p-panel>
+</div>
+<div style="margin-top: 5px" [ngStyle]="{ 'width' : isPopup ? '800px' : 'unset' }">
+    <p-tree [value]="items" [style]="{ 'width' : isPopup ? '800px' : 'unset' }">
+        <ng-template let-node pTemplate="default">
+            <div>
+                <p-panel [header]="node.data.userName + ': ' + convertDate(node.data.createdOn)"
+                    [style]="{'white-space': 'pre-wrap'}">
+                    <div class="ui-g">
+                        <div class="ui-lg-12">
+                            {{node.data.content}}
+                        </div>
+                    </div>
+                    <p-footer style="display: flex; flex-direction: column; justify-content: space-between;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <div style="margin-right: 5px">
+                                    <p-button icon="pi pi-user-plus" (click)="like(LikeType.like, node.data)"
+                                        [styleClass]="node.data.userLike !== 0 ? 'ui-button-secondary' : ''"
+                                        [label]="node.data.likes">
+                                    </p-button>
+                                </div>
+                                <div>
+                                    <p-button icon="pi pi-user-minus" (click)="like(LikeType.dislike, node.data)"
+                                        [styleClass]="node.data.userLike !== 1 ? 'ui-button-secondary' : ''"
+                                        [label]="node.data.dislikes">
+                                    </p-button>
+                                </div>
+                            </div>
+                            <div>
+                                <p-button icon="pi pi-arrow-down" (click)="node.data.showReply = true">
+                                </p-button>
+                            </div>
+                        </div>
+                        <div class="ui-inputgroup" style="margin-top: 5px" *ngIf="node.data.showReply">
+                            <input pInputText type="text" [(ngModel)]="node.data.reply">
+                            <p-button icon="pi pi-comment" (click)="reply(node, node.data.reply)"></p-button>
+                        </div>
+                    </p-footer>
+
+                </p-panel>
+            </div>
+
+        </ng-template>
+    </p-tree>
+</div>

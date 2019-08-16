@@ -18,6 +18,6 @@
         public int Reputation { get; set; }
 
         public long? ParteiId { get; set; }
-        public bool NotActive { get; set; }
+        public string ParteiKurzzeichen { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace Gerontocracy.Core.Interfaces
 
         VorfallDetail GetVorfallDetail(ClaimsPrincipal user, long id);
 
-        void AddVorfall(ClaimsPrincipal user, Vorfall vorfall);
+        long AddVorfall(ClaimsPrincipal user, Vorfall vorfall);
 
         void Vote(ClaimsPrincipal user, long vorfallId, VoteType? type);
 

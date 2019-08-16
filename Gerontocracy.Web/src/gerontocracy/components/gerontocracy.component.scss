@@ -1,0 +1,44 @@
+.geronto_container {
+  width: 1200px;
+  margin: auto;
+}
+
+.geronto_burger {
+  display: none;
+}
+
+.geronto_content {
+  margin-top: 5px;
+}
+
+.geronto_toolbar_wrapper {
+  width: 1184px;
+  margin: auto;
+}
+
+@media only screen and (max-width: 952px) {
+  .geronto_sidenav_toggle {
+    display: unset;
+  }
+
+  .geronto_burger {
+    display: unset;
+  }
+
+  .geronto_toolbar {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 1215px) {
+  .geronto_toolbar_wrapper {
+    width: auto;
+    margin-right: 8px;
+    margin-left: 8px;
+  }
+
+  .geronto_container {
+    width: auto;
+    margin: auto;
+  }
+}

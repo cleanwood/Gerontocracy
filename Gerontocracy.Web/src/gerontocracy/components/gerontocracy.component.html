@@ -1,0 +1,40 @@
+<div class="geronto-loading-shade" *ngIf="isLoading">
+  <p-progressSpinner strokeWidth="4" fill="#EEEEEE"></p-progressSpinner>
+</div>
+
+<div class="geronto_container" *ngIf="!isLoading">
+  <p-blockUI [blocked]="isDialogOpen">
+  </p-blockUI>
+
+  <div class="geronto_toolbar_wrapper">
+    <p-menubar [model]="items" class="geronto_toolbar">
+      <div *ngIf="!accountData">
+        <button pButton label="Login" icon="pi pi-sign-in" (click)="login()"></button>
+        <button pButton label="Registrieren" icon="pi pi-user-plus" style="margin-left:.25em"
+          (click)="signup()"></button>
+      </div>
+      <div *ngIf="accountData">
+        <p-splitButton [label]="accountData.userName" icon="pi pi-user" [model]="userMenu"></p-splitButton>
+      </div>
+    </p-menubar>
+
+    <p-menubar [model]="burger" class="geronto_burger">
+      <div *ngIf="!accountData">
+        <button pButton label="Login" icon="pi pi-sign-in" (click)="login($event)"></button>
+        <button pButton label="Registrieren" icon="pi pi-user-plus" style="margin-left:.25em"
+          (click)="signup($event)"></button>
+      </div>
+      <div *ngIf="accountData">
+        <p-splitButton [label]="accountData.userName" icon="pi pi-user" [model]="userMenu"></p-splitButton>
+      </div>
+    </p-menubar>
+  </div>
+
+  <p-sidebar [(visible)]="sidebarVisible">
+    <p-menu [model]="items"></p-menu>
+  </p-sidebar>
+
+  <div class="geronto_content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

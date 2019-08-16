@@ -1,0 +1,78 @@
+<div [formGroup]="registerForm" [style]="{width: '407px'}" >
+  <div class="ui-inputgroup">
+    <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
+    <input type="text" style="width: 346px" pInputText placeholder="Username" (focusout)="checkUserExists()"
+      formControlName="name">
+  </div>
+  <div style="display: flex; flex-direction: column;">
+    <p-message severity="error" text="Username ist ein Pflichtfeld!"
+      *ngIf="registerForm.controls.name.hasError('required') && registerForm.controls.name.touched"
+      style="margin-top: 5px">
+    </p-message>
+    <p-message severity="error" text="Username muss mindestens 3 Zeichen lang sein!"
+      *ngIf="registerForm.controls.name.hasError('minlength') && registerForm.controls.name.touched"
+      style="margin-top: 5px">
+    </p-message>
+    <p-message severity="error" text="Username darf maximal 30 Zeichen lang sein!"
+      *ngIf="registerForm.controls.name.hasError('maxlength') && registerForm.controls.name.touched"
+      style="margin-top: 5px">
+    </p-message>
+    <p-message severity="error" text="Username darf nur aus Buchstaben und Zahlen bestehen!"
+      *ngIf="registerForm.controls.name.hasError('pattern') && registerForm.controls.name.touched"
+      style="margin-top: 5px">
+    </p-message>
+    <p-message severity="error" text="Username wird bereits verwendet!"
+      *ngIf="registerForm.controls.name.hasError('alreadyInUse') && registerForm.controls.name.touched"
+      style="margin-top: 5px">
+    </p-message>
+  </div>
+
+  <div class="ui-inputgroup" style="margin-top: 5px">
+    <span class=" ui-inputgroup-addon"><i class="pi pi-user"></i></span>
+    <input type="text" style="width: 346px" (focusout)="checkEmailExists()" pInputText placeholder="E-Mail"
+      formControlName="mail">
+  </div>
+  <div style="display: flex; flex-direction: column;">
+    <p-message severity="error" text="E-Mail-Adresse ist ein Pflichtfeld!" style="margin-top: 5px"
+      *ngIf="registerForm.controls.mail.touched && registerForm.controls.mail.hasError('required')">
+    </p-message>
+    <p-message severity="error" text="Ungültige E-Mail-Adresse!" style="margin-top: 5px"
+      *ngIf="registerForm.controls.mail.touched && registerForm.controls.mail.hasError('email')">
+    </p-message>
+    <p-message severity="error" text="E-Mail zu lange!" style="margin-top: 5px"
+      *ngIf="registerForm.controls.mail.touched && registerForm.controls.mail.hasError('maxlength')">
+    </p-message>
+    <p-message severity="error" text="E-Mail wird schon verwendet!"
+      *ngIf="registerForm.controls.mail.touched && registerForm.controls.mail.hasError('alreadyInUse')">
+    </p-message>
+  </div>
+
+  <div class="ui-inputgroup" style="margin-top: 5px">
+    <span class="ui-inputgroup-addon"><i class="pi pi-key"></i></span>
+    <input type="password" style="width: 346px" pInputText placeholder="Passwort" formControlName="pass1">
+  </div>
+  <div style="display: flex; flex-direction: column;">
+    <p-message severity="error" text="Passwort muss mindestens 6 Stellen lang sein!" style="margin-top: 5px"
+      *ngIf="registerForm.controls.pass1.touched && registerForm.controls.pass1.hasError('minlength')">
+    </p-message>
+    <p-message severity="error" text="Passwort darf maximal 30 Stellen lang sein!" style="margin-top: 5px"
+      *ngIf="registerForm.controls.pass1.touched && registerForm.controls.pass1.hasError('maxlength')">
+    </p-message>
+  </div>
+
+  <div class="ui-inputgroup" style="margin-top: 5px">
+    <span class="ui-inputgroup-addon"><i class="pi pi-key"></i></span>
+    <input type="password" style="width: 346px" pInputText placeholder="Passwort wiederholen" formControlName="pass2">
+  </div>
+  <div style="display: flex; flex-direction: column;">
+    <p-message severity="error" text="Passwörter stimmen nicht überein!" style="margin-top: 5px"
+      *ngIf="registerForm.controls.pass2.touched && registerForm.controls.pass2.hasError('notSame')">
+    </p-message>
+  </div>
+
+  <div align="end" style="margin-top: 5px">
+    <button pButton label="Registrieren" (click)="registerUser()" [disabled]="isRegistering" style="margin-right: 5px"></button>
+    <button pButton label="Abbrechen" (click)="closeRegisterForm()" [disabled]="isRegistering"></button>
+  </div>
+</div>
+

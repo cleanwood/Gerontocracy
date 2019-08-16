@@ -151,6 +151,7 @@ namespace Gerontocracy.Core.Providers
                 IsNationalrat = n.IsNationalrat,
                 IsRegierung = n.IsRegierung,
                 ParteiId = n.ParteiId,
+                ParteiKurzzeichen = n.Partei.Kurzzeichen,
                 Reputation = n.Vorfaelle.Sum(o =>
                     (o.ReputationType == ReputationType.Positive ? 1 :
                      o.ReputationType == ReputationType.Negative ? -1 : 0) *
@@ -284,6 +285,7 @@ namespace Gerontocracy.Core.Providers
 
         private IQueryable<PolitikerOverview> GetPolitikerQuery()
             => _context.Politiker
+               .Include(n => n.Partei)
                .Include(n => n.Vorfaelle)
                .ThenInclude(n => n.Legitimitaet)
                .Select(n =>
@@ -296,6 +298,7 @@ namespace Gerontocracy.Core.Providers
                        Bundesland = n.Bundesland,
                        Vorname = n.Vorname,
                        Nachname = n.Nachname,
+                       ParteiKurzzeichen = n.Partei.Kurzzeichen,
                        ParteiId = n.ParteiId,
                        Wahlkreis = n.Wahlkreis,
                        IsNationalrat = n.IsNationalrat,
