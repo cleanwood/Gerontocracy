@@ -15,6 +15,6 @@ export class SharedAccountService {
   }
 
   whoami(): Observable<User> {
-    return this.httpClient.get<User>(`api/account/whoami`)
+    return this.httpClient.get<User>(`api/account/whoami`);
   }
 }
