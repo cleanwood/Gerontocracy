@@ -2,7 +2,7 @@
     <p-panel header="Allgemeine Infos">
         <div class="ui-g">
             <div class="ui-g-12 ui-lg-8 ui-md-12">
-                <b style="margin-top: 0">{{data.titel}}</b>
+                <b class="mt-0">{{data.titel}}</b>
             </div>
             <div class="ui-g-12 ui-lg-4 ui-md-12" *ngIf="!isPopup" align="end">
                 <p-button icon="pi pi-window-maximize" (click)="popout.emit()"></p-button>
@@ -18,7 +18,7 @@
         </div>
     </p-panel>
 </div>
-<div style="margin-top: 5px" [ngStyle]="{ 'width' : isPopup ? '800px' : 'unset' }">
+<div class="mt-5" [ngStyle]="{ 'width' : isPopup ? '800px' : 'unset' }">
     <p-tree [value]="items" [style]="{ 'width' : isPopup ? '800px' : 'unset' }">
         <ng-template let-node pTemplate="default">
             <div>
@@ -29,10 +29,10 @@
                             {{node.data.content}}
                         </div>
                     </div>
-                    <p-footer style="display: flex; flex-direction: column; justify-content: space-between;">
-                        <div style="display: flex; justify-content: space-between;">
-                            <div style="display: flex; justify-content: space-between;">
-                                <div style="margin-right: 5px">
+                    <p-footer class="d-flex flex-column d-flex-between">
+                        <div class="d-flex d-flex-between">
+                            <div class="d-flex d-flex-between">
+                                <div class="mr-5">
                                     <p-button icon="pi pi-user-plus" (click)="like(LikeType.like, node.data)"
                                         [styleClass]="node.data.userLike !== 0 ? 'ui-button-secondary' : ''"
                                         [label]="node.data.likes">
@@ -50,7 +50,7 @@
                                 </p-button>
                             </div>
                         </div>
-                        <div class="ui-inputgroup" style="margin-top: 5px" *ngIf="node.data.showReply">
+                        <div class="ui-inputgroup" class="mt-5" *ngIf="node.data.showReply">
                             <input pInputText type="text" [(ngModel)]="node.data.reply">
                             <p-button icon="pi pi-comment" (click)="reply(node, node.data.reply)"></p-button>
                         </div>

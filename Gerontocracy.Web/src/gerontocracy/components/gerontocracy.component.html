@@ -9,9 +9,8 @@
   <div class="geronto_toolbar_wrapper">
     <p-menubar [model]="items" class="geronto_toolbar">
       <div *ngIf="!accountData">
-        <button pButton label="Login" icon="pi pi-sign-in" (click)="login()"></button>
-        <button pButton label="Registrieren" icon="pi pi-user-plus" style="margin-left:.25em"
-          (click)="signup()"></button>
+        <button pButton label="Login" icon="pi pi-sign-in" class="mr-5" (click)="login()"></button>
+        <button pButton label="Registrieren" icon="pi pi-user-plus" (click)="signup()"></button>
       </div>
       <div *ngIf="accountData">
         <p-splitButton [label]="accountData.userName" icon="pi pi-user" [model]="userMenu"></p-splitButton>
@@ -20,9 +19,8 @@
 
     <p-menubar [model]="burger" class="geronto_burger">
       <div *ngIf="!accountData">
-        <button pButton label="Login" icon="pi pi-sign-in" (click)="login($event)"></button>
-        <button pButton label="Registrieren" icon="pi pi-user-plus" style="margin-left:.25em"
-          (click)="signup($event)"></button>
+        <button pButton label="Login" icon="pi pi-sign-in" class="mr-5" (click)="login($event)"></button>
+        <button pButton label="Registrieren" icon="pi pi-user-plus" (click)="signup($event)"></button>
       </div>
       <div *ngIf="accountData">
         <p-splitButton [label]="accountData.userName" icon="pi pi-user" [model]="userMenu"></p-splitButton>

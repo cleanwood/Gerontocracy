@@ -2,7 +2,7 @@
     <p-panel header="Allgemeine Infos">
         <div class="ui-g">
             <div class="ui-g-12 ui-lg-8 ui-md-12">
-                <b style="margin-top: 0px">{{data.titel}}</b>
+                <b class="mt-0">{{data.titel}}</b>
             </div>
             <div class="ui-g-12 ui-lg-4 ui-md-12" *ngIf="!isPopup" align="end">
                 <p-button icon="pi pi-window-maximize" (click)="popout.emit()"></p-button>
@@ -16,14 +16,14 @@
                 Kein Verantwortlicher!
             </div>
             <div class="ui-g-12 ui-md-4" align="end">
-                <button style="margin-right: 5px" pButton icon="pi pi-plus" (click)="onVoteClicked(VoteType.up)"
+                <button class="mr-5" pButton icon="pi pi-plus" (click)="onVoteClicked(VoteType.up)"
                     [ngClass]="{'ui-button-secondary': data.userVote !== VoteType.up}"></button>
                 <button pButton icon="pi pi-minus" (click)="onVoteClicked(VoteType.down)"
                     [ngClass]="{'ui-button-secondary': data.userVote !== VoteType.down}"></button>
             </div>
         </div>
     </p-panel>
-    <div style="margin-top: 5px" [ngStyle]="{ 'width' : isPopup ? '800px' : 'unset' }">
+    <div class="mt-5" [ngStyle]="{ 'width' : isPopup ? '800px' : 'unset' }">
         <p-panel header="Beschreibung">
             <div class="ui-g">
                 <div class="ui-g-12 ui-md-6">
@@ -40,7 +40,7 @@
             </div>
         </p-panel>
     </div>
-    <div style="margin-top: 5px" [ngStyle]="{ 'width' : isPopup ? '800px' : 'unset' }">
+    <div class="mt-5" [ngStyle]="{ 'width' : isPopup ? '800px' : 'unset' }">
         <p-table title="Quelle" [value]="data.quellen">
             <ng-template pTemplate="header">
                 <tr>

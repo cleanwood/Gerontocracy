@@ -9,10 +9,10 @@
                         </p-header>
                         {{artikel.description | stringTrim: 150}}
                         <p-footer>
-                            <div style="display: flex; flex-direction: column;">
+                            <div class="d-flex flex-column">
                                 <p>{{artikel.author}} - {{artikel.pubDate | date: 'dd.MM.yyyy hh:mm'}}</p>
                             </div>
-                            <div style="margin-top: 5px">
+                            <div  class="mt-5">
                                 <p-button icon="pi pi-plus" iconPos="right" *ngIf="!artikel.vorfallId" label="Neuer Vorfall"
                                     styleClass="ui-button-secondary" (click)="addAffair(artikel.id)"></p-button>
                                 <p-button icon="pi pi-external-link" iconPos="right" *ngIf="artikel.vorfallId" label="Zum Vorfall"

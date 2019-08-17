@@ -11,9 +11,9 @@
                         <div class="ui-g-12 ui-md-8">
                             <div class="ui-inputgroup">
                                 <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
-                                <input style="margin-right: 5px" type="text" pInputText formControlName="firstName"
+                                <input class="mr-5" type="text" pInputText formControlName="firstName"
                                     placeholder="Vorname">
-                                <input style="margin-right: 5px" type="text" pInputText formControlName="lastName"
+                                <input class="mr-5" type="text" pInputText formControlName="lastName"
                                     placeholder="Nachname">
                             </div>
                         </div>
@@ -23,7 +23,7 @@
                                 <input type="text" pInputText formControlName="party" placeholder="Partei">
                             </div>
                         </div>
-                        <div class="ui-g-12" style="display: flex; justify-content: space-between;" align="end">
+                        <div class="ui-g-12" align="end">
                             <p-button label="Suchen" icon="pi pi-search" (click)="loadData()">
                             </p-button>
                         </div>
@@ -34,7 +34,7 @@
                 <p-panel header="Übersicht">
                     <p-paginator [rows]="pageSize" [showCurrentPageReport]="true" [totalRecords]="maxResults"
                         [rowsPerPageOptions]="[10,25,50]" (onPageChange)="paginate($event)"></p-paginator>
-                    <div style="margin-top: 7px">
+                    <div class="mt-5">
                         <p-table [value]="data">
                             <ng-template pTemplate="header">
                                 <tr>
@@ -68,7 +68,8 @@
         </div>
         <div class="ui-g-12 ui-lg-4 ui-md-12">
             <p-panel header="Übersicht" *ngIf="detailData">
-                <app-detailview [data]="detailData" [isPopup]="false" (vorfallClicked)="showVorfall($event)" (popout)="showPopup()"></app-detailview>
+                <app-detailview [data]="detailData" [isPopup]="false" (vorfallClicked)="showVorfall($event)"
+                    (popout)="showPopup()"></app-detailview>
             </p-panel>
         </div>
     </div>

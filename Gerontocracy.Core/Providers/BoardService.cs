@@ -374,7 +374,6 @@ namespace Gerontocracy.Core.Providers
             return post;
         }
 
-
         #endregion Methods
     }
 }

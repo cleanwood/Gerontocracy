@@ -14,7 +14,7 @@
                                 <input type="text" pInputText formControlName="title" placeholder="Titel">
                             </div>
                         </div>
-                        <div class="ui-g-12" style="display: flex; justify-content: space-between;" align="end">
+                        <div class="ui-g-12 d-flex d-flex-between" align="end">
                             <p-button label="Neuer Thread" icon="pi pi-plus" (click)="addThread()">
                             </p-button>
                             <p-button label="Suchen" icon="pi pi-search" (click)="loadData()">
@@ -27,7 +27,7 @@
                 <p-panel header="Übersicht">
                     <p-paginator [rows]="pageSize" [showCurrentPageReport]="true" [totalRecords]="maxResults"
                         [rowsPerPageOptions]="[10,25,50]" (onPageChange)="paginate($event)"></p-paginator>
-                    <div style="margin-top: 7px">
+                    <div class="mt-5">
                         <p-table [value]="data">
                             <ng-template pTemplate="header">
                                 <tr>
