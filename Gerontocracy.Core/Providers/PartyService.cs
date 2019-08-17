@@ -236,10 +236,10 @@ namespace Gerontocracy.Core.Providers
                        Kurzzeichen = n.Kurzzeichen,
                        Name = n.Name,
                        Reputation = n.Politiker.Sum(m => m.Vorfaelle.Sum(o =>
-                           Math.Max(o.Legitimitaet.Count(p => p.VoteType == VoteType.Up && p.Vorfall.ReputationType == Data.Entities.Affair.ReputationType.Positive ||
-                                                              p.VoteType == VoteType.Down && p.Vorfall.ReputationType == Data.Entities.Affair.ReputationType.Negative), 0) -
-                           Math.Max(o.Legitimitaet.Count(p => p.VoteType == VoteType.Up && p.Vorfall.ReputationType == Data.Entities.Affair.ReputationType.Negative ||
-                                                              p.VoteType == VoteType.Down && p.Vorfall.ReputationType == Data.Entities.Affair.ReputationType.Positive), 0)))
+                           Math.Max(o.Legitimitaet.Count(p => (p.VoteType == VoteType.Up && p.Vorfall.ReputationType == ReputationType.Positive) ||
+                                                              (p.VoteType == VoteType.Down && p.Vorfall.ReputationType == ReputationType.Negative)), 0) -
+                           Math.Max(o.Legitimitaet.Count(p => (p.VoteType == VoteType.Up && p.Vorfall.ReputationType == ReputationType.Negative) ||
+                                                              (p.VoteType == VoteType.Down && p.Vorfall.ReputationType == ReputationType.Positive)), 0)))
                    });
 
         private IQueryable<PolitikerDetail> GetPolitikerDetailQuery()
@@ -276,11 +276,11 @@ namespace Gerontocracy.Core.Providers
                             }
                         }),
                     ReputationUp = n.Vorfaelle.Sum(o =>
-                        Math.Max(o.Legitimitaet.Count(p => p.VoteType == VoteType.Up && p.Vorfall.ReputationType == Data.Entities.Affair.ReputationType.Positive ||
-                                                           p.VoteType == VoteType.Down && p.Vorfall.ReputationType == Data.Entities.Affair.ReputationType.Negative), 0)),
+                        Math.Max(o.Legitimitaet.Count(p => (p.VoteType == VoteType.Up && p.Vorfall.ReputationType == ReputationType.Positive) ||
+                                                           (p.VoteType == VoteType.Down && p.Vorfall.ReputationType == ReputationType.Negative)), 0)),
                     ReputationDown = n.Vorfaelle.Sum(o =>
-                        Math.Max(o.Legitimitaet.Count(p => p.VoteType == VoteType.Up && p.Vorfall.ReputationType == Data.Entities.Affair.ReputationType.Negative ||
-                                                           p.VoteType == VoteType.Down && p.Vorfall.ReputationType == Data.Entities.Affair.ReputationType.Positive), 0))
+                        Math.Max(o.Legitimitaet.Count(p => (p.VoteType == VoteType.Up && p.Vorfall.ReputationType == ReputationType.Negative) ||
+                                                           (p.VoteType == VoteType.Down && p.Vorfall.ReputationType == ReputationType.Positive)), 0))
                 });
 
         private IQueryable<PolitikerOverview> GetPolitikerQuery()
@@ -304,11 +304,10 @@ namespace Gerontocracy.Core.Providers
                        IsNationalrat = n.IsNationalrat,
                        IsRegierung = n.IsRegierung,
                        Reputation = n.Vorfaelle.Sum(o =>
-                           Math.Max(o.Legitimitaet.Count(p => p.VoteType == VoteType.Up && p.Vorfall.ReputationType == Data.Entities.Affair.ReputationType.Positive ||
-                                                              p.VoteType == VoteType.Down && p.Vorfall.ReputationType == Data.Entities.Affair.ReputationType.Negative), 0) -
-                           Math.Max(o.Legitimitaet.Count(p => p.VoteType == VoteType.Up && p.Vorfall.ReputationType == Data.Entities.Affair.ReputationType.Negative ||
-                                                              p.VoteType == VoteType.Down && p.Vorfall.ReputationType == Data.Entities.Affair.ReputationType.Positive), 0))
-
+                           Math.Max(o.Legitimitaet.Count(p => (p.VoteType == VoteType.Up && p.Vorfall.ReputationType == ReputationType.Positive) ||
+                                                              (p.VoteType == VoteType.Down && p.Vorfall.ReputationType == ReputationType.Negative)), 0) -
+                           Math.Max(o.Legitimitaet.Count(p => (p.VoteType == VoteType.Up && p.Vorfall.ReputationType == ReputationType.Negative) ||
+                                                              (p.VoteType == VoteType.Down && p.Vorfall.ReputationType == ReputationType.Positive)), 0))
                    });
 
         private List<ParteiSelection> GetPolitikerSelection(Func<PolitikerOverview, bool> predicate)

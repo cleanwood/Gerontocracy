@@ -64,7 +64,6 @@ import { RadioButtonModule } from 'primeng/radiobutton';
   providers: [
     MessageService,
     AffairService,
-    DialogService,
   ]
 })
 export class AffairModule { }

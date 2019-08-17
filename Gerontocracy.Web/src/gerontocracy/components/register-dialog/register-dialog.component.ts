@@ -8,12 +8,13 @@ import { RegistrationConfirmDialogComponent } from '../registration-confirm-dial
 @Component({
   selector: 'app-register-dialog',
   templateUrl: './register-dialog.component.html',
-  styleUrls: ['./register-dialog.component.scss']
+  styleUrls: ['./register-dialog.component.scss'],
+  providers: [DialogService]
 })
 export class RegisterDialogComponent implements OnInit {
 
   registerForm: FormGroup;
-  registerError: Message[];
+  registerErrors: Message[];
   isRegistering: boolean;
   checkUsernameAvailability: boolean;
   checkEmailAvailability: boolean;
@@ -97,10 +98,14 @@ export class RegisterDialogComponent implements OnInit {
               width: '300px',
               header: 'Registrierung erfolgreich',
               closable: false,
-            }).onClose.toPromise().then(() => this.closeRegisterForm(true));
+            })
+            .onClose
+            .subscribe(() => this.closeRegisterForm(true));
         })
         .catch(() => {
           this.isRegistering = false;
+          this.registerErrors.push(
+            { severity: 'error', detail: 'Es ist ein Fehler aufgetreten - versuche es noch einmal!', summary: 'Fehler' });
           this.registerForm.enable();
         });
     }

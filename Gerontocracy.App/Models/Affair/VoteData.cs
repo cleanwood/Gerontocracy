@@ -1,6 +1,4 @@
-﻿
-
-namespace Gerontocracy.App.Models.Affair
+﻿namespace Gerontocracy.App.Models.Affair
 {
     /// <summary>
     /// Object, which contains the data, required for voting

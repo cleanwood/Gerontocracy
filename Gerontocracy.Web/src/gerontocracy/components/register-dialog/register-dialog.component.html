@@ -1,4 +1,5 @@
-<div [formGroup]="registerForm" [style]="{width: '407px'}" >
+<div [formGroup]="registerForm" [style]="{width: '407px'}">
+  <p-messages [(value)]="loginErrors"></p-messages>
   <div class="ui-inputgroup">
     <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
     <input type="text" style="width: 346px" pInputText placeholder="Username" (focusout)="checkUserExists()"
@@ -71,8 +72,8 @@
   </div>
 
   <div align="end" style="margin-top: 5px">
-    <button pButton label="Registrieren" (click)="registerUser()" [disabled]="isRegistering" style="margin-right: 5px"></button>
+    <button pButton label="Registrieren" (click)="registerUser()" [disabled]="isRegistering"
+      style="margin-right: 5px"></button>
     <button pButton label="Abbrechen" (click)="closeRegisterForm(false)" [disabled]="isRegistering"></button>
   </div>
 </div>
-

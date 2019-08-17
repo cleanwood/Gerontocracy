@@ -13,7 +13,8 @@ import { LoginDialogComponent } from '../../../../components/login-dialog/login-
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.scss']
+  styleUrls: ['./overview.component.scss'],
+  providers: [DialogService]
 })
 export class OverviewComponent implements OnInit {
 

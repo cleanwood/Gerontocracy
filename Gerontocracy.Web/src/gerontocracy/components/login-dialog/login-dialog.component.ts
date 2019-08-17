@@ -12,9 +12,10 @@ import { Login } from '../../models/login';
 export class LoginDialogComponent implements OnInit {
 
   loginForm: FormGroup;
-  loginError: Message[];
+  loginErrors: Message[];
   isLogingIn: boolean;
   rememberMe: boolean;
+  checkboxDisabled: boolean;
 
   constructor(
     private dialogRef: DynamicDialogRef,
@@ -23,8 +24,10 @@ export class LoginDialogComponent implements OnInit {
     private accountService: AccountService) { }
 
   ngOnInit() {
+    this.checkboxDisabled = false;
     this.rememberMe = false;
     this.isLogingIn = false;
+    this.loginErrors = [];
 
     this.buildLoginForm();
   }
@@ -37,6 +40,7 @@ export class LoginDialogComponent implements OnInit {
     if (this.loginForm.valid) {
       this.isLogingIn = true;
       this.loginForm.disable();
+      this.checkboxDisabled = true;
 
       const temp = this.loginForm.value;
       const data: Login = {
@@ -52,8 +56,9 @@ export class LoginDialogComponent implements OnInit {
           this.closeLoginForm(true);
         })
         .catch(() => {
-          this.loginError.push({ severity: 'error', summary: 'Fehler', detail: 'Login fehlgeschlagen! Bitte Zugangsdaten überprüfen!' });
+          this.loginErrors.push({ severity: 'error', summary: 'Fehler', detail: 'Login fehlgeschlagen! Bitte Zugangsdaten überprüfen!' });
           this.isLogingIn = false;
+          this.checkboxDisabled = false;
           this.loginForm.enable();
         });
     }

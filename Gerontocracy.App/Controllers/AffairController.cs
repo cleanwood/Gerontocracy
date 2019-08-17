@@ -36,10 +36,6 @@ namespace Gerontocracy.App.Controllers
         /// 
         /// </summary>
         /// <param name="title"></param>
-        /// <param name="minReputation"></param>
-        /// <param name="maxReputation"></param>
-        /// <param name="from"></param>
-        /// <param name="to"></param>
         /// <param name="firstName"></param>
         /// <param name="lastName"></param>
         /// <param name="party"></param>
@@ -50,10 +46,6 @@ namespace Gerontocracy.App.Controllers
         [Route("affairsearch")]
         public IActionResult Search(
             string title,
-            int? minReputation,
-            int? maxReputation,
-            long? from,
-            long? to,
             string firstName,
             string lastName,
             string party,
@@ -62,10 +54,6 @@ namespace Gerontocracy.App.Controllers
             )
         => Ok(_mapper.Map<SearchResult<VorfallOverview>>(_affairService.Search(new bo.SearchParameters()
         {
-            From = from.HasValue ? new DateTime(from.Value) : (DateTime?)null,
-            To = to.HasValue ? new DateTime(to.Value) : (DateTime?)null,
-            MaxReputation = maxReputation,
-            MinReputation = minReputation,
             Nachname = lastName,
             Vorname = firstName,
             ParteiName = party,

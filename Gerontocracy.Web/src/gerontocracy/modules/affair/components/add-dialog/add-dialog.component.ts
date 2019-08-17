@@ -15,7 +15,8 @@ import { ReputationType } from '../../../shared/models/reputation-type';
 @Component({
   selector: 'app-add-dialog',
   templateUrl: './add-dialog.component.html',
-  styleUrls: ['./add-dialog.component.scss']
+  styleUrls: ['./add-dialog.component.scss'],
+  providers: [DialogService]
 })
 export class AddDialogComponent implements OnInit {
 

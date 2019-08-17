@@ -12,15 +12,11 @@ using Gerontocracy.Data;
 using Gerontocracy.Shared.Extensions;
 using Npgsql;
 
-using db = Gerontocracy.Data.Entities;
-
 namespace Gerontocracy.Core.Providers
 {
     public class UserService : IUserService
     {
         private readonly GerontocracyContext _context;
-        private readonly IAccountService _accountService;
-        private readonly IMapper _mapper;
 
         private const string UserQuery =
             "SELECT users.\"Id\", " +
@@ -45,16 +41,10 @@ namespace Gerontocracy.Core.Providers
             "       JOIN \"AspNetUserRoles\" userRoles " +
             "         ON roles.\"Id\" = userRoles.\"RoleId\" " +
             "WHERE  userRoles.\"UserId\" = @userId ";
-
-
-        public UserService(
-            GerontocracyContext context,
-            IAccountService accountService,
-            IMapper mapper)
+        
+        public UserService(GerontocracyContext context)
         {
             this._context = context;
-            this._accountService = accountService;
-            this._mapper = mapper;
         }
 
         public SearchResult<User> Search(SearchParameters parameters, int pageSize = 25, int pageIndex = 0)

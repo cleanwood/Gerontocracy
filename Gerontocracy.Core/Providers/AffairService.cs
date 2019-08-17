@@ -81,11 +81,11 @@ namespace Gerontocracy.Core.Providers
                 Titel = vorfall.Titel,
                 ErstelltAm = vorfall.ErstelltAm,
                 Reputation = vorfall.Legitimitaet.Count(p =>
-                                 p.VoteType == Data.Entities.Affair.VoteType.Up && p.Vorfall.ReputationType == Data.Entities.Affair.ReputationType.Positive ||
-                                 p.VoteType == Data.Entities.Affair.VoteType.Down && p.Vorfall.ReputationType == Data.Entities.Affair.ReputationType.Negative) -
+                                 (p.VoteType == Data.Entities.Affair.VoteType.Up && p.Vorfall.ReputationType == Data.Entities.Affair.ReputationType.Positive) ||
+                                 (p.VoteType == Data.Entities.Affair.VoteType.Down && p.Vorfall.ReputationType == Data.Entities.Affair.ReputationType.Negative)) -
                              vorfall.Legitimitaet.Count(p =>
-                                 p.VoteType == Data.Entities.Affair.VoteType.Up && p.Vorfall.ReputationType == Data.Entities.Affair.ReputationType.Negative ||
-                                 p.VoteType == Data.Entities.Affair.VoteType.Down && p.Vorfall.ReputationType == Data.Entities.Affair.ReputationType.Positive),
+                                 (p.VoteType == Data.Entities.Affair.VoteType.Up && p.Vorfall.ReputationType == Data.Entities.Affair.ReputationType.Negative) ||
+                                 (p.VoteType == Data.Entities.Affair.VoteType.Down && p.Vorfall.ReputationType == Data.Entities.Affair.ReputationType.Positive)),
                 PolitikerId = vorfall.PolitikerId,
                 PolitikerName = vorfall.Politiker.Name,
                 ParteiName = vorfall.Politiker.Partei.Kurzzeichen,
@@ -130,20 +130,14 @@ namespace Gerontocracy.Core.Providers
             return vorfallMapped;
         }
 
-        public BusinessObjects.Shared.SearchResult<VorfallOverview> Search(BusinessObjects.Affair.SearchParameters param, int pageSize = 25, int pageIndex = 0)
+        public SearchResult<VorfallOverview> Search(BusinessObjects.Affair.SearchParameters param, int pageSize = 25, int pageIndex = 0)
         {
             var query = _context.Vorfall
                 .Include(n => n.Politiker)
-                .ThenInclude(n => n.Partei)
+                    .ThenInclude(n => n.Partei)
                 .Include(n => n.Legitimitaet)
                 .AsQueryable();
-
-            if (param.From != null)
-                query = query.Where(n => n.ErstelltAm >= param.From);
-
-            if (param.To != null)
-                query = query.Where(n => n.ErstelltAm <= param.To);
-
+            
             if (!string.IsNullOrEmpty(param.Titel))
                 query = query.Where(n => n.Titel.Contains(param.Titel, StringComparison.CurrentCultureIgnoreCase));
 
@@ -155,38 +149,7 @@ namespace Gerontocracy.Core.Providers
 
             if (!string.IsNullOrEmpty(param.ParteiName))
                 query = query.Where(n => n.Politiker.Partei.Kurzzeichen.Contains(param.ParteiName, StringComparison.CurrentCultureIgnoreCase));
-
-            if (param.MaxReputation.HasValue)
-                query = query.Where(n =>
-                    !n.ReputationType.HasValue
-                    ||
-                    n.ReputationType == db.Affair.ReputationType.Neutral
-                    ||
-                    (n.Legitimitaet.Count(m => m.VoteType == Data.Entities.Affair.VoteType.Up) -
-                     n.Legitimitaet.Count(m => m.VoteType == Data.Entities.Affair.VoteType.Down)
-                     <= param.MaxReputation.Value && n.ReputationType == db.Affair.ReputationType.Positive)
-                    ||
-                    (n.Legitimitaet.Count(m => m.VoteType == Data.Entities.Affair.VoteType.Down) -
-                     n.Legitimitaet.Count(m => m.VoteType == Data.Entities.Affair.VoteType.Up)
-                     <= param.MaxReputation.Value && n.ReputationType == db.Affair.ReputationType.Negative)
-                );
-
-            if (param.MinReputation.HasValue)
-                query = query.Where(n =>
-                    !n.ReputationType.HasValue
-                    ||
-                    n.ReputationType == db.Affair.ReputationType.Neutral
-                    ||
-                    (n.Legitimitaet.Count(m => m.VoteType == Data.Entities.Affair.VoteType.Up)
-                    - n.Legitimitaet.Count(m => m.VoteType == Data.Entities.Affair.VoteType.Down)
-                     >= param.MinReputation.Value
-                     && n.ReputationType == db.Affair.ReputationType.Positive)
-                    ||
-                    (n.Legitimitaet.Count(m => m.VoteType == Data.Entities.Affair.VoteType.Down)
-                    - n.Legitimitaet.Count(m => m.VoteType == Data.Entities.Affair.VoteType.Up)
-                    >= param.MinReputation.Value && n.ReputationType == db.Affair.ReputationType.Negative)
-                );
-
+            
             var dbResult = query.Select(n => new VorfallOverview()
             {
                 ErstelltAm = n.ErstelltAm,

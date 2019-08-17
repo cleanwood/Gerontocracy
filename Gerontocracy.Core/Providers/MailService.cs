@@ -7,7 +7,6 @@ using Gerontocracy.Core.Interfaces;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
-
 namespace Gerontocracy.Core.Providers
 {
     public class MailService : IMailService

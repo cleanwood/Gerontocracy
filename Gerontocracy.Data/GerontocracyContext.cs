@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 using Gerontocracy.Data.Entities.Party;
@@ -13,7 +12,7 @@ using System.Collections.Generic;
 
 namespace Gerontocracy.Data
 {
-    public partial class GerontocracyContext : IdentityDbContext<User, Role, long>
+    public class GerontocracyContext : IdentityDbContext<User, Role, long>
     {
         public GerontocracyContext(DbContextOptions<GerontocracyContext> options) : base(options)
         {
@@ -33,8 +32,7 @@ namespace Gerontocracy.Data
         public DbSet<Artikel> Artikel { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) => base.OnModelCreating(modelBuilder);
-
-
+        
         public List<T> GetData<T>(string query, Func<DbDataReader, T> readerFunc, Array parameters = null)
         {
             var data = new List<T>();

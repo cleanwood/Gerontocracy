@@ -15,6 +15,5 @@ namespace Gerontocracy.Core.Interfaces
         void Vote(ClaimsPrincipal user, long vorfallId, VoteType? type);
 
         SearchResult<VorfallOverview> Search(SearchParameters param, int pageSize = 25, int pageIndex = 0);
-
     }
 }

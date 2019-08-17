@@ -15,7 +15,7 @@ namespace Gerontocracy.Core.BusinessObjects.Affair
         public ReputationType? ReputationType { get; set; }
         public int Reputation { get; set; }
         public VoteType? UserVote { get; set; }
-        public Account.User ErstelltVon {get;set;}
+        public Account.User ErstelltVon { get; set; }
 
         public List<QuelleOverview> Quellen { get; set; }
         public PolitikerOverview Politiker { get; set; }
