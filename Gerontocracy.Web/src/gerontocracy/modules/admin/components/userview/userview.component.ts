@@ -18,6 +18,8 @@ export class UserviewComponent implements OnInit {
 
   searchForm: FormGroup;
 
+  popupVisible: boolean;
+
   pageSize = 25;
   maxResults = 0;
   pageIndex = 0;
@@ -35,6 +37,8 @@ export class UserviewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.popupVisible = false;
+
     this.searchForm = this.formBuilder.group({
       userName: ['']
     });
@@ -46,7 +50,7 @@ export class UserviewComponent implements OnInit {
       }
     });
 
-    this.loadData(null);
+    this.loadData();
   }
 
   showDetail(id: number) {
@@ -58,7 +62,7 @@ export class UserviewComponent implements OnInit {
       .catch(n => this.messageService.add({ severity: 'error', detail: n.Message, summary: 'Fehler' }));
   }
 
-  loadData(evt: any): void {
+  loadData(): void {
     this.pageIndex = 0;
     this.maxResults = 0;
     this.adminService.search(this.searchForm.value, this.pageSize, this.pageIndex)
