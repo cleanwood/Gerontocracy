@@ -80,7 +80,7 @@ export class GerontocracyComponent implements OnInit {
           }
         ];
 
-        if (this.accountData.roles.find(n => n === 'admin')) {
+        if (this.accountData && this.accountData.roles.find(n => n === 'admin')) {
           urls.push({ label: 'admin', icon: 'pi pi-cog', routerLink: '/admin' });
         }
 
