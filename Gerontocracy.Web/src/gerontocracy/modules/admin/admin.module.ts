@@ -20,6 +20,8 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { AddRoleDialogComponent } from './components/add-role-dialog/add-role-dialog.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { TaskviewComponent } from './components/taskview/taskview.component';
+import { TaskdetailComponent } from './components/taskdetail/taskdetail.component';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     AdminComponent,
     UserviewComponent,
     UserdetailComponent,
-    AddRoleDialogComponent
+    AddRoleDialogComponent,
+    TaskviewComponent,
+    TaskdetailComponent
   ],
   imports: [
     CommonModule,

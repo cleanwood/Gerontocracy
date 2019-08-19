@@ -6,7 +6,7 @@ using AutoMapper;
 using Gerontocracy.App.Models.Account;
 using Gerontocracy.App.Models.Admin;
 using Gerontocracy.App.Models.Shared;
-
+using Gerontocracy.App.Models.Task;
 using Gerontocracy.Core.Interfaces;
 
 using Microsoft.AspNetCore.Authorization;
@@ -27,20 +27,24 @@ namespace Gerontocracy.App.Controllers
         private readonly IAccountService _accountService;
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+        private readonly ITaskService _taskService;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="accountService">account service</param>
         /// <param name="userService">user service</param>
+        /// <param name="taskService">task service</param>
         /// <param name="mapper">mapper</param>
         public AdminController(
             IAccountService accountService,
             IUserService userService,
+            ITaskService taskService,
             IMapper mapper)
         {
             this._accountService = accountService;
             this._userService = userService;
+            this._taskService = taskService;
             this._mapper = mapper;
         }
 
@@ -155,5 +159,30 @@ namespace Gerontocracy.App.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult GetUser(long id)
             => Ok(_mapper.Map<UserDetail>(_userService.GetUserDetail(id)));
+
+        /// <summary>
+        /// Returns a list of tasks
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="taskType"></param>
+        /// <param name="includeDone"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("task")]
+        [Authorize(Roles = "admin,moderator")]
+        public IActionResult GetTasks(
+            string userName,
+            int taskType,
+            bool includeDone,
+            int pageSize = 25,
+            int pageIndex = 0)
+            => Ok(_mapper.Map<SearchResult<AufgabeOverview>>(_taskService.Search(new bo.Task.SearchParameters
+            {
+                Username = userName,
+                IncludeDone = includeDone
+            })));
+
     }
 }

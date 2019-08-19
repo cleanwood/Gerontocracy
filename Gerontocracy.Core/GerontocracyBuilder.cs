@@ -45,6 +45,7 @@ namespace Gerontocracy.Core
             services.AddTransient<Interfaces.IBoardService, Providers.BoardService>();
             services.AddTransient<Interfaces.INewsService, Providers.NewsService>();
             services.AddTransient<Interfaces.IUserService, Providers.UserService>();
+            services.AddTransient<Interfaces.ITaskService, Providers.TaskService>();
 
             // ===== Add Scopeds =====
             services.AddScoped<Interfaces.ISyncService, Providers.SyncService>();
