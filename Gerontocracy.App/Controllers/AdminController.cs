@@ -185,5 +185,15 @@ namespace Gerontocracy.App.Controllers
                 TaskType = (bo.Task.TaskType?)taskType
             })));
 
+        /// <summary>
+        /// Returns a single task
+        /// </summary>
+        /// <param name="id">identifier</param>
+        /// <returns>task and statuscode</returns>
+        [HttpGet]
+        [Route("task/{id:long}")]
+        [Authorize(Roles = "admin,moderator")]
+        public IActionResult GetTask(long id)
+            => Ok(_mapper.Map<AufgabeDetail>(_taskService.GetTask(id)));
     }
 }

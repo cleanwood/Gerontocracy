@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Gerontocracy.Data.Entities.Account;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Gerontocracy.Data.Entities.Account;
 
 namespace Gerontocracy.Data.Entities.Task
 {
-    public class AufgabeOverview
+    public class Aufgabe
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -19,12 +19,14 @@ namespace Gerontocracy.Data.Entities.Task
 
         public bool Erledigt { get; set; }
 
+        public string MetaData { get; set; }
+
         [ForeignKey(nameof(Einreicher))]
         public long EinreicherId { get; set; }
         public User Einreicher { get; set; }
 
-        [ForeignKey(nameof(Uebernommen))]
-        public long? UebernommenId { get; set; }
-        public User Uebernommen { get; set; }
+        [ForeignKey(nameof(Bearbeiter))]
+        public long? BearbeiterId { get; set; }
+        public User Bearbeiter { get; set; }
     }
 }

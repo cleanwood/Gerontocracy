@@ -4,8 +4,8 @@ import { Router, ActivatedRoute, ResolveStart } from '@angular/router';
 import { AccountService } from '../../../../services/account.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
-import { TaskType } from '../../models/task-type';
 import { AufgabeOverview } from '../../models/aufgabe-overview';
+import { AufgabeDetail } from '../../models/aufgabe-detail';
 
 @Component({
   selector: 'app-taskview',
@@ -28,6 +28,7 @@ export class TaskviewComponent implements OnInit {
   selectionItems: SelectItem[];
 
   data: AufgabeOverview[];
+  detailData: AufgabeDetail;
 
   constructor(
     private router: Router,
@@ -94,12 +95,12 @@ export class TaskviewComponent implements OnInit {
   }
 
   showDetail(id: number) {
-    // this.detailData = null;
+    this.detailData = null;
 
-    // this.adminService.getUserDetail(id)
-    //   .toPromise()
-    //   .then(n => this.detailData = n)
-    //   .catch(n => this.messageService.add({ severity: 'error', detail: n.Message, summary: 'Fehler' }));
+    this.adminService.getTaskDetail(id)
+      .toPromise()
+      .then(n => this.detailData = n)
+      .catch(n => this.messageService.add({ severity: 'error', detail: n.Message, summary: 'Fehler' }));
   }
 
   loadData(): void {

@@ -1,1 +1,59 @@
-<p>taskdetail works!</p>
+<div class="ui-fluid">
+    <div>
+        <p-panel header="Übersicht">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <h6>Meldung von</h6>
+                    <p>{{data.einreicher}}</p>
+                    <p>
+                        <i class="pi pi-calendar"></i>
+                        {{data.eingereichtAm | date: 'dd.MM.yyyy hh:mm'}}
+                    </p>
+                </div>
+            </div>
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <p *ngIf="data.bearbeiterId !== 0"> <i class="pi pi-tag"></i>{{data.bearbeiter}}</p>
+                    <p *ngIf="data.bearbeiterId === 0"> <i class="pi pi-tag"></i>(Noch kein Bearbeiter)</p>
+                </div>
+            </div>
+            <div class="ui-g">
+                <div class="ui-g-6">
+                    Kategorie:
+                    {{data.taskType | taskType}}
+                </div>
+                <div class="ui-g-6">
+                    <div *ngIf="data.erledigt">
+                        <i class="pi pi-check"></i> Erledigt!
+                    </div>
+                    <div *ngIf="!data.erledigt">
+                        <i class="pi pi-times"></i> Nicht erledigt!
+                    </div>
+                </div>
+            </div>
+        </p-panel>
+    </div>
+    <div class="mt-5">
+        <p-panel header="Meldung">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    {{data.metaData}}
+                </div>
+            </div>
+        </p-panel>
+    </div>
+    <div class="mt-5">
+        <p-panel header="Userkommentar">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <p *ngIf="data.beschreibung && data.beschreibung !== ''">
+                        {{data.beschreibung}}
+                    </p>
+                    <p *ngIf="!data.beschreibung || data.beschreibung === ''">
+                        (Keine Beschreibung vorhanden!)
+                    </p>
+                </div>
+            </div>
+        </p-panel>
+    </div>
+</div>

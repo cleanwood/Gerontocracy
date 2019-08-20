@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection.Metadata;
+using AutoMapper;
+using Gerontocracy.Core.BusinessObjects.Account;
 using Gerontocracy.Core.BusinessObjects.Shared;
 using Gerontocracy.Core.BusinessObjects.Task;
+using Gerontocracy.Core.Exceptions;
 using Gerontocracy.Core.Interfaces;
 using Gerontocracy.Data;
 
@@ -16,14 +20,16 @@ namespace Gerontocracy.Core.Providers
         #region Fields
 
         private readonly GerontocracyContext _context;
+        private readonly IMapper _mapper;
 
         #endregion Fields
 
         #region Constructors
 
-        public TaskService(GerontocracyContext context)
+        public TaskService(GerontocracyContext context, IMapper mapper)
         {
             this._context = context;
+            this._mapper = mapper;
         }
 
         #endregion Constructors
@@ -34,7 +40,7 @@ namespace Gerontocracy.Core.Providers
         {
             var query = _context
                 .Aufgabe
-                .Include(n => n.Uebernommen)
+                .Include(n => n.Bearbeiter)
                 .Include(n => n.Einreicher)
                 .AsQueryable();
 
@@ -61,13 +67,38 @@ namespace Gerontocracy.Core.Providers
                 EingereichtAm = n.EingereichtAm,
                 Einreicher = n.Einreicher.UserName,
                 TaskType = (TaskType)n.TaskType,
-                Uebernommen = n.Uebernommen != null
+                Uebernommen = n.Bearbeiter != null
             }).ToList();
 
             return new SearchResult<AufgabeOverview>
             {
                 Data = data,
                 MaxResults = query.Count()
+            };
+        }
+
+        public AufgabeDetail GetTask(long id)
+        {
+            var task = _context
+                .Aufgabe
+                .Include(n => n.Bearbeiter)
+                .Include(n => n.Einreicher)
+                .SingleOrDefault(n => n.Id == id);
+            
+            if (task == null)
+                throw new TaskNotFoundException();
+
+            return new AufgabeDetail
+            {
+                TaskType = (TaskType)task.TaskType,
+                Id = task.Id,
+                Einreicher = task.Einreicher?.UserName ?? string.Empty,
+                EinreicherId = task.EinreicherId,
+                Bearbeiter = task.Bearbeiter?.UserName ?? string.Empty,
+                BearbeiterId = task.BearbeiterId,
+                Erledigt = task.Erledigt,
+                Beschreibung = task.Beschreibung,
+                MetaData = task.MetaData
             };
         }
 

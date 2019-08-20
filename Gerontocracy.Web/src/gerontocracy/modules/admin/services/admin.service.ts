@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { SearchParams } from '../models/search-params';
 import { SearchResult } from '../models/search-result';
 import { Observable } from 'rxjs';
 import { UserDetail } from '../models/user-detail';
@@ -8,6 +7,7 @@ import { UserRole } from '../models/user-role';
 import { Role } from '../models/role';
 import { UserOverview } from '../models/user-overview';
 import { AufgabeOverview } from '../models/aufgabe-overview';
+import { AufgabeDetail } from '../models/aufgabe-detail';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +36,10 @@ export class AdminService {
       + `pageindex=${pageIndex}`;
 
     return this.httpClient.get<SearchResult<AufgabeOverview>>(request);
+  }
+
+  getTaskDetail(id: number) {
+    return this.httpClient.get<AufgabeDetail>(`api/admin/task/${id}`);
   }
 
   getUserDetail(id: number) {
