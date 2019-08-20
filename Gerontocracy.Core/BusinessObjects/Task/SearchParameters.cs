@@ -5,5 +5,7 @@
         public string Username { get; set; }
 
         public bool IncludeDone { get; set; }
+
+        public TaskType? TaskType { get; set; }
     }
 }

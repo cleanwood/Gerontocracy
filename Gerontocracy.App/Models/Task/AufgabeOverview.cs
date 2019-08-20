@@ -23,6 +23,11 @@ namespace Gerontocracy.App.Models.Task
         public DateTime EingereichtAm { get; set; }
 
         /// <summary>
+        /// username of incident submitter
+        /// </summary>
+        public string Einreicher { get; set; }
+
+        /// <summary>
         /// Task taken by
         /// </summary>
         public bool Uebernommen { get; set; }

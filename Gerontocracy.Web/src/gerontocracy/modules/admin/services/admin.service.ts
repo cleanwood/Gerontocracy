@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { UserDetail } from '../models/user-detail';
 import { UserRole } from '../models/user-role';
 import { Role } from '../models/role';
+import { UserOverview } from '../models/user-overview';
+import { AufgabeOverview } from '../models/aufgabe-overview';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +18,24 @@ export class AdminService {
     private httpClient: HttpClient
   ) { }
 
-  search(params: SearchParams, pageSize: number, pageIndex: number): Observable<SearchResult> {
-    const request = `api/admin/usersearch?`
+  search(params: any, pageSize: number, pageIndex: number): Observable<SearchResult<UserOverview>> {
+    const request = `api/admin/search-users?`
       + `username=${params.userName}&`
       + `pagesize=${pageSize}&`
       + `pageindex=${pageIndex}`;
 
-    return this.httpClient.get<SearchResult>(request);
+    return this.httpClient.get<SearchResult<UserOverview>>(request);
+  }
+
+  getTasks(params: any, pageSize: number, pageIndex: number): Observable<SearchResult<AufgabeOverview>> {
+    const request = `api/admin/search-tasks?`
+      + `username=${params.userName}&`
+      + `taskType=${params.taskType}&`
+      + `includeDone=${params.includeDone}&`
+      + `pagesize=${pageSize}&`
+      + `pageindex=${pageIndex}`;
+
+    return this.httpClient.get<SearchResult<AufgabeOverview>>(request);
   }
 
   getUserDetail(id: number) {

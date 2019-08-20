@@ -4,8 +4,10 @@ using Gerontocracy.Core.BusinessObjects.Shared;
 using Gerontocracy.Core.BusinessObjects.Task;
 using Gerontocracy.Core.Interfaces;
 using Gerontocracy.Data;
-using Microsoft.Data.OData;
+
 using Microsoft.EntityFrameworkCore;
+
+using db = Gerontocracy.Data.Entities;
 
 namespace Gerontocracy.Core.Providers
 {
@@ -47,11 +49,17 @@ namespace Gerontocracy.Core.Providers
                     n.Einreicher.UserName.Contains(parameters.Username, StringComparison.CurrentCultureIgnoreCase));
             }
 
-            var data = query.Select(n => new AufgabeOverview()
+            if (parameters.TaskType.HasValue)
+            {
+                query = query.Where(n => n.TaskType == (db.Task.TaskType)parameters.TaskType.Value);
+            }
+
+            var data = query.Select(n => new AufgabeOverview
             {
                 Id = n.Id,
                 Erledigt = n.Erledigt,
                 EingereichtAm = n.EingereichtAm,
+                Einreicher = n.Einreicher.UserName,
                 TaskType = (TaskType)n.TaskType,
                 Uebernommen = n.Uebernommen != null
             }).ToList();

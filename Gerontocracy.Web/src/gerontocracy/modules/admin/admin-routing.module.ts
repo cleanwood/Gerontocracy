@@ -28,11 +28,11 @@ export const routes: Routes = [
             },
             {
                 path: '',
-                component: UserviewComponent
+                component: TaskviewComponent
             },
             {
                 path: '**',
-                component: UserviewComponent
+                component: TaskviewComponent
             }
         ]
     }

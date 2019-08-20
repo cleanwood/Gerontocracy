@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 using Gerontocracy.Data.Entities.Account;
 
 namespace Gerontocracy.Data.Entities.Task
@@ -26,7 +24,7 @@ namespace Gerontocracy.Data.Entities.Task
         public User Einreicher { get; set; }
 
         [ForeignKey(nameof(Uebernommen))]
-        public long UebernommenId { get; set; }
+        public long? UebernommenId { get; set; }
         public User Uebernommen { get; set; }
     }
 }

@@ -138,7 +138,7 @@ namespace Gerontocracy.App.Controllers
         /// <param name="pageIndex">page index</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("usersearch")]
+        [Route("search-users")]
         [Authorize(Roles = "admin")]
         public IActionResult GetUsers(
             string userName = "",
@@ -170,18 +170,19 @@ namespace Gerontocracy.App.Controllers
         /// <param name="pageIndex"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("task")]
+        [Route("search-tasks")]
         [Authorize(Roles = "admin,moderator")]
         public IActionResult GetTasks(
             string userName,
-            int taskType,
+            TaskType? taskType,
             bool includeDone,
             int pageSize = 25,
             int pageIndex = 0)
             => Ok(_mapper.Map<SearchResult<AufgabeOverview>>(_taskService.Search(new bo.Task.SearchParameters
             {
                 Username = userName,
-                IncludeDone = includeDone
+                IncludeDone = includeDone,
+                TaskType = (bo.Task.TaskType?)taskType
             })));
 
     }
