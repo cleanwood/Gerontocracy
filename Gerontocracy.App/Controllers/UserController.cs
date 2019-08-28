@@ -50,5 +50,16 @@ namespace Hivecluster.ClipMash.App.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> GetDashboardUser()
             => Ok(_mapper.Map<User>(await _accountService.GetUserOrDefaultAsync(User)));
+
+        /// <summary>
+        /// Returns user overview informations by an Id
+        /// </summary>
+        /// <param name="id">the users Id</param>
+        /// <returns>the user overview</returns>
+        [HttpGet]
+        [Route("overview/{id:long}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetUserOverView(long id)
+            => Ok(_mapper.Map<UserOverView>(await _accountService.GetUserOverViewAsync(id)));
     }
 }

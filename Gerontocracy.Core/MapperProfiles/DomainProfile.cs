@@ -23,6 +23,7 @@ namespace Gerontocracy.Core.MapperProfiles
             CreateMap<bo.Affair.Quelle, en.Affair.Quelle>();
 
             CreateMap<bo.Affair.Vorfall, en.Affair.Vorfall>();
+            CreateMap<bo.Account.UserOverView, en.Account.User>();
         }
     }
 }

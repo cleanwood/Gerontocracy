@@ -62,6 +62,15 @@ namespace Gerontocracy.Core.Providers
             return _mapper.Map<User>(user);
         }
 
+        public async Task<UserOverView> GetUserOverViewAsync(long userId)
+        {
+            var useroverview = await GetUserOverViewAsync(userId);
+            if (useroverview == null)
+                throw new AccountNotFoundException();
+
+            return _mapper.Map<UserOverView>(useroverview);
+        }
+
         public async Task<User> GetUserAsync(string name)
         {
             var user = await _userManager.FindByNameAsync(name);

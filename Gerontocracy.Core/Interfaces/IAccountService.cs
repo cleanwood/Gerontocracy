@@ -64,5 +64,6 @@ namespace Gerontocracy.Core.Interfaces
         IEnumerable<Role> GetRolesAsync();
 
         Task<IdentityResult> SetRolesAsync(long userId, List<long> roleIds);
+        Task<UserOverView> GetUserOverViewAsync(long id);
     }
 }
